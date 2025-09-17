@@ -1,15 +1,13 @@
 /* Fonts */
 @import url("fonts.css");
-
+/* Background importieren */
+@import url("bg-grid1.css");
 
 body {
   min-height: 100vh;
   height: 100%;
 }
-.background {
-z-index: -1;
-  height: 100%;
-}
+
 .content {
   position: absolute;
   z-index: 1;

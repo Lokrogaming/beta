@@ -1,4 +1,13 @@
+/* Fonts */
+@import url("fonts.css")
+
+
 body {
   min-height: 100vh;
   height: 100%;
+}
+.content {
+  position: absolute;
+  z-index: 1;
+  font-family: "Varela Round";
 }

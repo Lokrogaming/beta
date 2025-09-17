@@ -13,4 +13,7 @@ z-index: -1;
       linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent);
   background-size: 55px 55px;
   background-repeat: repeat;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }

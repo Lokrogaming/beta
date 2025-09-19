@@ -1,1 +1,15 @@
+[
+  {
+    "name": "Unreleased: Time (Scratch)",
+    "filepath": "files/time/time.html"
+  },
+  {
+    "name": "Unreleased: Guessr (Scratch)",
+    "filepath": "files/guessr/guessr.html"
+  },
+  {
+    "name": "Beta v2.0",
+    "filepath": "https://example.com/downloads/beta-v2.0.zip"
+  }
+]
 

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Menu</title>
+  <style>
+   @import url("src/styles/main.css");
+  </style>
+</head>
+<body>
+  <div class="container"></div>
+  <div class="content box">
+    <ul id="betaDisplay"></ul>
+    
+  </div>
+  <br>
+
+  <script>
+    let data = [];
+    const versionsList = document.getElementById("betaDisplay");
+
+    async function loadVersions() {
+      const url = "betas.json";
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Fehler beim Laden der Daten");
+        data = await response.json();
+        renderVersions();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderVersions() {
+      versionsList.innerHTML = "";
+      data.forEach(item => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = item.filepath;
+        a.textContent = item.name;
+        a.target = "_blank";
+        li.appendChild(a);
+        versionsList.appendChild(li);
+      });
+    }
+
+    loadVersions();
+  </script>
+</body>
+</html>

@@ -3,6 +3,11 @@
 /* Background importieren */
 @import url("bg-grid1.css");
 
+/* Textzeugs */
+@import url("text.css");
+
+
+
 body {
   height: 100%;
   margin: 0;

@@ -1,0 +1,43 @@
+:root {
+   --btn: #4A90E2;
+    --btn-hover: #357ABD;
+    --btn-copy: #27ae60;
+    --btn-copy-hover: #1e8449;
+    --btn-secondary: #666;
+    --btn-secondary-hover: #444;
+}
+button {
+    flex: 1;
+    background: var(--btn);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    
+  }
+
+  button:hover {
+    background: var(--btn-hover);
+  }
+
+  button:active {
+    transform: scale(0.97);
+  }
+
+  .secondary {
+    background: var(--btn-secondary);
+  }
+
+  .secondary:hover {
+    background: var(--btn-secondary-hover);
+  }
+
+  .copy-btn {
+    background: var(--btn-copy);
+  }
+
+  .copy-btn:hover {
+    background: var(--btn-copy-hover);
+  }

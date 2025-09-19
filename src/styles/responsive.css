@@ -1,0 +1,4 @@
+  @media (max-width: 600px) {
+    .row { flex-direction: column; }
+    button { flex: none; width: 100%; }
+  }

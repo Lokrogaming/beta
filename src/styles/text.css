@@ -16,3 +16,56 @@
     color: var(--text);
     
   }
+h1 {
+    margin-top: 0;
+    font-size: 1.8rem;
+    text-align: center;
+    color: var(--text);
+    transition: color 0.4s ease;
+  }
+
+  label {
+    font-weight: 600;
+    margin-top: 12px;
+    display: block;
+    color: var(--text);
+    transition: color 0.4s ease;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    transition: border 0.2s, background 0.4s ease, color 0.4s ease;
+    background: var(--bg-container);
+    color: var(--text);
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--btn);
+    box-shadow: 0 0 6px rgba(74,144,226,0.3);
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .small {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    text-align: center;
+    transition: color 0.4s ease;
+  }

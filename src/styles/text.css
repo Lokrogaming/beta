@@ -1,0 +1,18 @@
+:root {
+    --bg-container: #595959;
+    --shadow-container: #595959;
+    --text: #222;
+    --text-light: #666;
+   
+  }
+
+.box {
+    background: var(--bg-container);
+    border-radius: 16px;
+    box-shadow: 0 0 100px var(--shadow-container);
+    padding: 24px;
+    max-width: 700px;
+    width: 100%;
+    color: var(--text);
+    
+  }

@@ -22,7 +22,6 @@ body {
 }
 
 .content {
-  position: absolute;
   z-index: 1;
   font-family: "Varela Round";
 }

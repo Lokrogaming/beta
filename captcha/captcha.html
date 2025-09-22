@@ -1,28 +1,42 @@
+<!doctype html>
 <html>
-  <head>
-    <title>Beta</title>
-    <link rel="stylesheet" href="/src/styles/main.css">
-    <style>
+<head>
+  <meta charset="utf-8">
+  <title>Turnstile Demo</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <form id="demo-form">
+    <input type="email" name="email" placeholder="E-Mail" required>
     
-    </style>
-     <script src="https://www.google.com/recaptcha/api.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script>
-  </head>
-  <body>
- 
-    <div class="background bg-grid1"></div>
-<div class="content box">
-  <button class="g-recaptcha" 
-        data-sitekey="6LdqK9ErAAAAAMVrwTyjrxJVTKMDiQtsXAco0Wrn" 
-        data-callback='onSubmit' 
-        data-action='submit'>Submit</button>
-</div>
+    <!-- Cloudflare Turnstile Widget -->
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAB2mejB5e4DeNL-G"></div>
+    
+    <button type="submit">Absenden</button>
+  </form>
+
   <script>
-     <script>
-   function onSubmit(token) {
-     document.getElementById("demo-form").submit();
-   }
- </script>
-  </script> 
-  </body>
+    document.getElementById("demo-form").addEventListener("submit", async e => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      // Token wird automatisch hinzugefügt als 'cf-turnstile-response'
+      const token = formData.get('cf-turnstile-response');
+
+      if (!token) {
+        alert("Bitte bestätige, dass du kein Bot bist!");
+        return;
+      }
+
+      // Optional: Token an deinen Worker/Server schicken
+      const resp = await fetch("https://captcha.lokrogamer29.workers.dev/verify", {
+        method: "POST",
+        body: formData
+      });
+
+      const text = await resp.text();
+      alert(text);
+    });
+  </script>
+</body>
 </html>

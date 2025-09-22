@@ -8,7 +8,10 @@
 /* Responsive Zeugs */
 @import url("responsive.css");
 
-
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
 body {
   height: 100%;

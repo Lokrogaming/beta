@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Beta</title>
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <style>
+    
+    </style>
+     <script src="https://www.google.com/recaptcha/api.js"></script>
+  </head>
+  <body>
+ 
+    <div class="background bg-grid1"></div>
+<div class="content box">
+  <button class="g-recaptcha" 
+        data-sitekey="6LdqK9ErAAAAAMVrwTyjrxJVTKMDiQtsXAco0Wrn" 
+        data-callback='onSubmit' 
+        data-action='submit'>Submit</button>
+</div>
+  <script>
+     <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
+  </script> 
+  </body>
+</html>

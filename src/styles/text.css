@@ -14,7 +14,7 @@
     max-width: 700px;
     width: 100%;
     color: var(--text);
-    
+    margin: 0 auto; /* <--- mittig */
   }
 h1 {
     margin-top: 0;

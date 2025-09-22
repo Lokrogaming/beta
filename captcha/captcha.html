@@ -4,8 +4,11 @@
   <meta charset="utf-8">
   <title>Turnstile Demo</title>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <link rel="stylesheet" href="/src/styles/main.css">
 </head>
 <body>
+  <div class="background bg-grid1"></div>
+  <div class="content">
   <form id="demo-form">
     <input type="email" name="email" placeholder="E-Mail" required>
     
@@ -14,7 +17,7 @@
     
     <button type="submit">Absenden</button>
   </form>
-
+  </div>
   <script>
     document.getElementById("demo-form").addEventListener("submit", async e => {
       e.preventDefault();

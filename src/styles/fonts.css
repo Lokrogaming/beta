@@ -1,6 +1,6 @@
 @font-face {
   font-family: "ArialRoundedMTBold";
-  src: url("\fonts\arial-rounded-mt-bold.ttf") format("truetype");
+  src: url("https://lokrogaming.github.io/fonts/arial-rounded-mt-bold.ttf") format("truetype");
 }
 @font-face {
   font-family: "Bitcount Prop Double Light";
@@ -8,7 +8,7 @@
 }
 @font-face {
   font-family: "Varela Round";
-  src: url("\fonts\VarelaRound-Regular.ttf") format("truetype");
+  src: url("https://lokrogaming.github.io/fonts/VarelaRound-Regular.ttf") format("truetype");
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');

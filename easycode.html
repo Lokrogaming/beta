@@ -1,0 +1,351 @@
+<!doctype html>
+
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Low‑Code Website Builder — Single File</title>
+  <style>
+   :root{
+      --bg:#0e1117;
+      --surface:#161b22;
+      --surface-light:#1f2733;
+      --border:#2d3543;
+      --text:#e6edf3;
+      --muted:#8b98ab;
+      --accent:#3b82f6;
+      --accent-light:#60a5fa;
+      --radius:12px;
+      --shadow:0 6px 24px rgba(0,0,0,0.3);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Inter',system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);}
+    body{display:flex;flex-direction:column;min-height:100vh;}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 20px;margin:12px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .logo{font-weight:700;font-size:1.2rem;color:var(--accent);}
+    .muted{color:var(--muted);font-size:0.9rem;}
+    .controls-btn{
+      padding:8px 14px;border-radius:var(--radius);
+      border:none;cursor:pointer;
+      background:var(--accent);
+      color:#fff;font-weight:600;
+      transition:all .2s;
+    }
+    .controls-btn:hover{background:var(--accent-light);}
+    .btn-ghost{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--muted);
+    }
+    .btn-ghost:hover{color:var(--text);border-color:var(--accent-light)}
+
+    .app{display:grid;grid-template-columns:280px 1fr 320px;gap:16px;flex:1;padding:12px;}
+    .sidebar, .rightbar{
+      background:var(--surface);
+      border-radius:var(--radius);
+      padding:16px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      overflow:auto;
+    }
+    .components button{display:block;width:100%;padding:10px;margin-bottom:10px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-light);color:var(--muted);text-align:left;cursor:pointer;transition:all .2s;}
+    .components button:hover{color:var(--text);border-color:var(--accent-light);background:rgba(59,130,246,0.1)}
+
+    .canvas-wrap{
+      background:var(--surface);
+      border-radius:var(--radius);
+      padding:16px;display:flex;flex-direction:column;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    .viewport{
+      background:#fff;border-radius:var(--radius);
+      padding:20px;color:#111;flex:1;overflow:auto;
+      min-height:420px;box-shadow:inset 0 0 8px rgba(0,0,0,0.05);
+    }
+    .block{
+      padding:12px;border:1px dashed var(--border);
+      border-radius:var(--radius);
+      margin-bottom:12px;background:#f9fafb;
+      transition:background .2s;
+    }
+    .block:hover{background:#f3f4f6;}
+    .block[draggable="true"]{cursor:move}
+    .block .toolbar{display:flex;gap:8px;justify-content:flex-end;margin-bottom:6px}
+
+    h3{margin-bottom:8px}
+    .prop{display:flex;flex-direction:column;margin-bottom:14px}
+    label{font-size:13px;color:var(--muted);margin-bottom:4px}
+    input[type="text"],select,textarea{padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--surface-light);color:var(--text);}
+    textarea{resize:vertical;}
+
+    footer.note{grid-column:1/-1;text-align:center;color:var(--muted);font-size:0.85rem;padding:10px;margin-top:10px;}
+
+    .mobile {width:360px;margin:0 auto;border:1px solid var(--border);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    .hidden{display:none}
+    pre.codebox{white-space:pre-wrap;background:#010409;padding:16px;border-radius:var(--radius);color:#c9d1d9;max-height:60vh;overflow:auto;font-size:0.85rem}
+
+    button{font-family:inherit}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo">LC</div>
+      <div>
+        <div style="font-weight:700">Low‑Code Website Builder</div>
+        <div class="muted">Schnell Prototypen erstellen — per Drag & Drop</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <button id="exportBtn" class="controls-btn">HTML exportieren</button>
+        <button id="previewToggle" class="controls-btn btn-ghost">Mobile/Desk</button>
+      </div>
+    </header><aside class="sidebar">
+  <h3>Bausteine</h3>
+  <div class="components">
+    <button data-type="hero">Hero (Heading + Sub)</button>
+    <button data-type="heading">Heading</button>
+    <button data-type="paragraph">Paragraph</button>
+    <button data-type="image">Image</button>
+    <button data-type="button">Button</button>
+    <button data-type="columns">2 Columns</button>
+    <button data-type="spacer">Spacer</button>
+  </div>
+
+  <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
+  <h3>Vorlagen</h3>
+  <div class="templates muted">Klicke eine Vorlage, um sie ins Canvas zu laden:</div>
+  <div style="display:flex;gap:8px;margin-top:8px">
+    <button id="loadLanding" class="btn-ghost">Landing</button>
+    <button id="loadAbout" class="btn-ghost">About</button>
+  </div>
+</aside>
+
+<main class="canvas-wrap">
+  <div class="controls">
+    <button id="addEmpty" class="btn-ghost">Leeres Section</button>
+    <button id="clear" class="btn-ghost">Alles löschen</button>
+    <div style="margin-left:auto" class="muted">Drag a block to reorder • Click a block to edit</div>
+  </div>
+
+  <div id="viewportContainer" class="viewport" contenteditable="false" aria-label="Vorschau">
+    <!-- Blocks appear here -->
+  </div>
+</main>
+
+<aside class="rightbar">
+  <h3>Eigenschaften</h3>
+  <div id="properties" class="muted">Wähle ein Element im Canvas aus, um es anzupassen.</div>
+
+  <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
+  <h3>Export</h3>
+  <div class="muted">Generiere sauberes HTML für Produktion oder Export.</div>
+  <button id="openExport" style="margin-top:8px" class="controls-btn">Export ansehen</button>
+</aside>
+
+<footer class="note">Erstellt mit ❤️ — Einfaches Single‑File Low‑Code</footer>
+
+  </div>  <!-- Export Modal (hidden) -->  <div id="exportModal" class="hidden" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:60">
+    <div style="width:90%;max-width:900px;background:#071726;padding:16px;border-radius:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3 style="margin:0">Exportiertes HTML</h3>
+        <div>
+          <button id="downloadHtml" class="controls-btn">Download</button>
+          <button id="copyHtml" class="btn-ghost">Kopieren</button>
+          <button id="closeExport" class="btn-ghost">Schließen</button>
+        </div>
+      </div>
+      <pre id="exportCode" class="codebox"></pre>
+    </div>
+  </div>  <script>
+    // Simple low-code editor: insert blocks, edit inline, drag reorder, export HTML.
+    const viewport = document.getElementById('viewportContainer');
+    const components = document.querySelectorAll('.components button');
+    const properties = document.getElementById('properties');
+    const exportBtn = document.getElementById('exportBtn');
+    const exportModal = document.getElementById('exportModal');
+    const exportCode = document.getElementById('exportCode');
+    const copyHtml = document.getElementById('copyHtml');
+    const downloadHtml = document.getElementById('downloadHtml');
+    const closeExport = document.getElementById('closeExport');
+    const previewToggle = document.getElementById('previewToggle');
+    const openExport = document.getElementById('openExport');
+
+    // Helpers to create elements
+    function createBlock(type, content){
+      const wrapper = document.createElement('div');
+      wrapper.className = 'block';
+      wrapper.draggable = true;
+      wrapper.dataset.type = type;
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'toolbar';
+      toolbar.innerHTML = ` <button class='edit btn-ghost'>Bearbeiten</button> <button class='del btn-ghost'>Löschen</button>`;
+
+      wrapper.appendChild(toolbar);
+
+      let inner;
+      switch(type){
+        case 'hero':
+          inner = document.createElement('div');
+          inner.innerHTML = `<h1 contenteditable='true'>Dein wundervolles Produkt</h1><p contenteditable='true'>Kurzbeschreibung, die Besucher begeistert.</p>`;
+          break;
+        case 'heading':
+          inner = document.createElement('h2'); inner.contentEditable = true; inner.innerText = 'Überschrift';
+          break;
+        case 'paragraph':
+          inner = document.createElement('p'); inner.contentEditable = true; inner.innerText = 'Ein informativer Absatz...';
+          break;
+        case 'image':
+          inner = document.createElement('div'); inner.innerHTML = `<img src='https://picsum.photos/800/400' alt='Bild' style='max-width:100%;display:block;border-radius:6px'/>`;
+          break;
+        case 'button':
+          inner = document.createElement('div'); inner.innerHTML = `<a href='#' class='btn' contenteditable='true' style='display:inline-block;padding:10px 14px;border-radius:6px;background:#06b6d4;color:#012'>Call to action</a>`;
+          break;
+        case 'columns':
+          inner = document.createElement('div'); inner.innerHTML = `<div style='display:flex;gap:12px'><div style='flex:1' contenteditable='true'><h3>Column 1</h3><p>Text</p></div><div style='flex:1' contenteditable='true'><h3>Column 2</h3><p>Text</p></div></div>`;
+          break;
+        case 'spacer':
+          inner = document.createElement('div'); inner.style.height = '24px';
+          break;
+        default:
+          inner = document.createElement('div'); inner.contentEditable = true; inner.innerText = content || 'Neues Element';
+      }
+
+      wrapper.appendChild(inner);
+
+      // events
+      wrapper.addEventListener('click', (e)=>{
+        if(e.target.classList.contains('del')){ wrapper.remove(); showProps(null); }
+        else if(e.target.classList.contains('edit')){ makeEditable(inner); showProps(wrapper); }
+        else { showProps(wrapper); }
+      });
+
+      // drag handlers
+      wrapper.addEventListener('dragstart', dragStart);
+      wrapper.addEventListener('dragover', dragOver);
+      wrapper.addEventListener('drop', drop);
+
+      return wrapper;
+    }
+
+    // Component buttons
+    components.forEach(btn => btn.addEventListener('click', ()=>{
+      const type = btn.dataset.type;
+      const block = createBlock(type);
+      viewport.appendChild(block);
+    }));
+
+    document.getElementById('addEmpty').addEventListener('click', ()=>viewport.appendChild(createBlock('section', 'Neue Section')));
+    document.getElementById('clear').addEventListener('click', ()=>{viewport.innerHTML=''; showProps(null)});
+
+    // Templates
+    document.getElementById('loadLanding').addEventListener('click', ()=>{
+      viewport.innerHTML='';
+      viewport.appendChild(createBlock('hero'));
+      viewport.appendChild(createBlock('paragraph'));
+      viewport.appendChild(createBlock('columns'));
+    });
+    document.getElementById('loadAbout').addEventListener('click', ()=>{
+      viewport.innerHTML='';
+      viewport.appendChild(createBlock('heading'));
+      viewport.appendChild(createBlock('paragraph'));
+      viewport.appendChild(createBlock('image'));
+    });
+
+    // Editability
+    function makeEditable(el){
+      // make direct children editable
+      el.querySelectorAll('[contenteditable]').forEach(node=>node.focus());
+    }
+
+    // Properties panel
+    function showProps(block){
+      if(!block){ properties.innerHTML = 'Wähle ein Element im Canvas aus, um es anzupassen.'; return }
+      const type = block.dataset.type || 'section';
+      const inner = block.querySelector(':scope > *:not(.toolbar)');
+      let html = `<div class='muted'><strong>Typ:</strong> ${type}</div>`;
+      html += `<div style='margin-top:8px' class='prop'><label>InnerHTML</label><textarea id='propHtml' rows='6'>${sanitize(inner ? inner.innerHTML : '')}</textarea></div>`;html += `<div><button id='applyProp' class='controls-btn'>Anwenden</button> <button id='removeBlock' class='btn-ghost'>Block entfernen</button></div>`;
+  properties.innerHTML = html;
+
+  document.getElementById('applyProp').addEventListener('click', ()=>{
+    const txt = document.getElementById('propHtml').value;
+    if(inner) inner.innerHTML = txt;
+  });
+  document.getElementById('removeBlock').addEventListener('click', ()=>{ block.remove(); showProps(null)});
+}
+
+function sanitize(s){ return s.replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+// Drag & Drop simple ordering
+let dragSrc = null;
+function dragStart(e){ dragSrc = this; e.dataTransfer.effectAllowed = 'move'; }
+function dragOver(e){ e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+function drop(e){ e.preventDefault(); if(dragSrc && dragSrc !== this){
+    const container = viewport;
+    const nodes = Array.from(container.children);
+    const srcIdx = nodes.indexOf(dragSrc);
+    const tgtIdx = nodes.indexOf(this);
+    if(srcIdx < tgtIdx) container.insertBefore(dragSrc, this.nextSibling);
+    else container.insertBefore(dragSrc, this);
+  }
+}
+
+// Export logic: build minimal, clean HTML
+function buildHtml(){
+  const docTitle = 'Generated by Low‑Code Builder';
+  const bodyContent = Array.from(viewport.children).map(block => {
+    const inner = block.querySelector(':scope > *:not(.toolbar)');
+    return inner ? inner.outerHTML : '';
+  }).join('\n');
+
+  const html = `<!doctype html>\n<html lang=\"de\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>${docTitle}</title>\n<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap\" rel=\"stylesheet\">\n<style>body{font-family:Inter,system-ui,Arial;margin:0;padding:32px;line-height:1.45;color:#0b2940}img{max-width:100%;height:auto}a.button{display:inline-block;padding:10px 14px;border-radius:6px;background:#06b6d4;color:#012;text-decoration:none}</style>\n</head>\n<body>\n${bodyContent}\n</body>\n</html>`;
+  return html;
+}
+
+exportBtn.addEventListener('click', ()=>{
+  const html = buildHtml();
+  exportCode.textContent = html;
+  exportModal.classList.remove('hidden');
+});
+openExport.addEventListener('click', ()=>exportBtn.click());
+
+copyHtml.addEventListener('click', async ()=>{
+  try{ await navigator.clipboard.writeText(exportCode.textContent); copyHtml.innerText='Kopiert!'; setTimeout(()=>copyHtml.innerText='Kopieren',1500) }catch(e){ alert('Kopieren fehlgeschlagen: '+e) }
+});
+
+closeExport.addEventListener('click', ()=>exportModal.classList.add('hidden'));
+
+downloadHtml.addEventListener('click', ()=>{
+  const blob = new Blob([exportCode.textContent], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'site.html'; a.click(); URL.revokeObjectURL(url);
+});
+
+// Quick preview toggle: emulate mobile width
+let mobile = false;
+previewToggle.addEventListener('click', ()=>{
+  mobile = !mobile;
+  if(mobile){ viewport.style.width='360px'; viewport.style.margin='0 auto'; viewport.classList.add('mobile') }
+  else { viewport.style.width='auto'; viewport.style.margin=''; viewport.classList.remove('mobile') }
+});
+
+// click outside to deselect
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.block') && !e.target.closest('.components') && !e.target.closest('.rightbar')) showProps(null);
+});
+
+// Auto-insert a starter block
+viewport.appendChild(createBlock('hero'));
+
+  </script>
+</body>
+</html>

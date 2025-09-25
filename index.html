@@ -1,135 +1,99 @@
-<!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Main Menu</title>
-  <style>
-    @import url("https://lokrogaming.github.io/stc/styles/fonts.css");
-
-    /* Hintergrund */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      color: #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Grid Overlay */
-    .background.bg-grid1 {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: 0;
-    }
-
-    /* Content Box */
-    .content.box {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
-      margin: 100px 20px 40px 20px;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-      animation: fadeIn 1s ease-out;
-    }
-
-    /* Versionsliste */
-    #betaDisplay {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    #betaDisplay li {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 12px 18px;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, background 0.3s ease;
-    }
-
-    #betaDisplay li:hover {
-      transform: translateY(-3px);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    #betaDisplay a {
-      color: #38bdf8;
-      font-weight: 600;
-      text-decoration: none;
-      display: block;
-    }
-
-    #betaDisplay a:hover {
-      color: #0ea5e9;
-    }
-
-    /* Animation */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-<body>
-  <div class="background bg-grid1"></div>
-
-  <div class="content box">
-    <h1>Verfügbare Beta-Versionen</h1>
-    <ul id="betaDisplay">
-      <li>Wird geladen...</li>
-    </ul>
-  </div>
-
-  <script>
-    let data = [];
-    const versionsList = document.getElementById("betaDisplay");
-
-    async function loadVersions() {
-      const url = "betas.json";
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Fehler beim Laden der Daten");
-        data = await response.json();
-        renderVersions();
-      } catch (err) {
-        console.error(err);
-        versionsList.innerHTML = "<li>Fehler beim Laden der Versionen.</li>";
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+    <style>
+      /* Hintergrund */
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        color: #f1f5f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        overflow-x: hidden;
       }
-    }
 
-    function renderVersions() {
-      versionsList.innerHTML = "";
-      data.forEach(item => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = item.filepath;
-        a.textContent = item.name;
-        a.target = "_blank";
-        li.appendChild(a);
-        versionsList.appendChild(li);
-      });
-    }
+      /* Grid Overlay */
+      .background.bg-grid1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: 0;
+      }
 
-    loadVersions();
-  </script>
-</body>
+      /* Content Box */
+      .content.box {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 100px 20px 40px 20px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        text-align: center;
+        animation: fadeIn 1s ease-out;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+        line-height: 1.6;
+        font-weight: 500;
+      }
+
+      a {
+        color: #38bdf8;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+
+      a:hover {
+        color: #0ea5e9;
+      }
+
+      /* Elfsight Styling */
+      .elfsight-app-14fdf69d-7050-47f6-aeef-514353a13c06 {
+        position: relative;
+        z-index: 1;
+        margin-top: 30px;
+        width: 100%;
+        max-width: 600px;
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background bg-grid1"></div>
+
+    <div class="content box">
+      <h1>
+        Hier kannst du unsere geplanten Ideen und Funktionen testen und bewerten.<br><br> 
+        Nutze hierzu die Issues-Funktion auf 
+        <a href="https://github.com/" target="_blank">GitHub</a> oder schreibe uns eine 
+        <a href="mailto:lokrogamer.29@gmail.com">E-Mail</a>.
+      </h1>
+    </div>
+
+    <!-- Elfsight Contact Form -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-14fdf69d-7050-47f6-aeef-514353a13c06" data-elfsight-app-lazy></div>
+  </body>
 </html>

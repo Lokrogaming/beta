@@ -90,7 +90,7 @@
     footer.note{grid-column:1/-1;text-align:center;color:var(--muted);font-size:0.85rem;padding:10px;margin-top:10px;}
 
     .mobile {width:360px;margin:0 auto;border:1px solid var(--border);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-    .hidden{display:none}
+    .hidden{display:none !important}
     pre.codebox{white-space:pre-wrap;background:#010409;padding:16px;border-radius:var(--radius);color:#c9d1d9;max-height:60vh;overflow:auto;font-size:0.85rem}
 
     button{font-family:inherit}
@@ -153,7 +153,7 @@
 
 <footer class="note">Erstellt mit ❤️ — Einfaches Single‑File Low‑Code</footer>
 
-  </div>  <!-- Export Modal (hidden) -->  <div id="exportModal" class="hidden" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:60">
+  </div>  <!-- Export Modal (hidden) -->  <div id="exportModal" class="hidden" style="position:fixed;inset:0;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:60">
     <div style="width:90%;max-width:900px;background:#071726;padding:16px;border-radius:10px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
         <h3 style="margin:0">Exportiertes HTML</h3>

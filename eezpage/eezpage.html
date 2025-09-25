@@ -47,7 +47,33 @@
     }
     .btn-ghost:hover{color:var(--text);border-color:var(--accent-light)}
 
-    .app{display:grid;grid-template-columns:280px 1fr 320px;gap:16px;flex:1;padding:12px;}
+    .app {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 16px;
+  flex: 1;
+  padding: 12px;
+}
+
+@media (max-width: 1100px) {
+  .app {
+    grid-template-columns: 220px 1fr;
+  }
+  .rightbar {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+  .sidebar, .rightbar {
+    order: unset;
+  }
+}
+
     .sidebar, .rightbar{
       background:var(--surface);
       border-radius:var(--radius);
@@ -269,19 +295,70 @@
 
     // Properties panel
     function showProps(block){
-      if(!block){ properties.innerHTML = 'Wähle ein Element im Canvas aus, um es anzupassen.'; return }
-      const type = block.dataset.type || 'section';
-      const inner = block.querySelector(':scope > *:not(.toolbar)');
-      let html = `<div class='muted'><strong>Typ:</strong> ${type}</div>`;
-      html += `<div style='margin-top:8px' class='prop'><label>InnerHTML</label><textarea id='propHtml' rows='6'>${sanitize(inner ? inner.innerHTML : '')}</textarea></div>`;html += `<div><button id='applyProp' class='controls-btn'>Anwenden</button> <button id='removeBlock' class='btn-ghost'>Block entfernen</button></div>`;
-  properties.innerHTML = html;
+  if(!block){ 
+    properties.innerHTML = 'Wähle ein Element im Canvas aus, um es anzupassen.'; 
+    return;
+  }
+  const type = block.dataset.type || 'section';
+  const inner = block.querySelector(':scope > *:not(.toolbar)');
+  let html = `<div class='muted'><strong>Typ:</strong> ${type}</div>`;
 
-  document.getElementById('applyProp').addEventListener('click', ()=>{
-    const txt = document.getElementById('propHtml').value;
-    if(inner) inner.innerHTML = txt;
-  });
-  document.getElementById('removeBlock').addEventListener('click', ()=>{ block.remove(); showProps(null)});
+  if(type === 'image'){
+    const img = inner.querySelector('img');
+    html += `<div class='prop'><label>Bild-URL</label>
+               <input id='propSrc' type='text' value='${img.src}' />
+             </div>
+             <div class='prop'><label>Alt-Text</label>
+               <input id='propAlt' type='text' value='${img.alt}' />
+             </div>`;
+    html += `<button id='applyProp' class='controls-btn'>Anwenden</button>`;
+    properties.innerHTML = html;
+    document.getElementById('applyProp').addEventListener('click', ()=>{
+      img.src = document.getElementById('propSrc').value;
+      img.alt = document.getElementById('propAlt').value;
+    });
+  }
+
+  else if(type === 'button'){
+    const btn = inner.querySelector('a');
+    html += `<div class='prop'><label>Text</label>
+               <input id='propText' type='text' value='${btn.innerText}' />
+             </div>
+             <div class='prop'><label>Link (href)</label>
+               <input id='propHref' type='text' value='${btn.href}' />
+             </div>
+             <div class='prop'><label>Farbe</label>
+               <input id='propColor' type='color' value='#06b6d4' />
+             </div>`;
+    html += `<button id='applyProp' class='controls-btn'>Anwenden</button>`;
+    properties.innerHTML = html;
+    document.getElementById('applyProp').addEventListener('click', ()=>{
+      btn.innerText = document.getElementById('propText').value;
+      btn.href = document.getElementById('propHref').value;
+      btn.style.background = document.getElementById('propColor').value;
+    });
+  }
+
+  else {
+    // Standard-Fall wie vorher
+    html += `<div style='margin-top:8px' class='prop'>
+               <label>InnerHTML</label>
+               <textarea id='propHtml' rows='6'>${inner ? inner.innerHTML : ''}</textarea>
+             </div>
+             <div>
+               <button id='applyProp' class='controls-btn'>Anwenden</button>
+               <button id='removeBlock' class='btn-ghost'>Block entfernen</button>
+             </div>`;
+    properties.innerHTML = html;
+    document.getElementById('applyProp').addEventListener('click', ()=>{
+      if(inner) inner.innerHTML = document.getElementById('propHtml').value;
+    });
+    document.getElementById('removeBlock').addEventListener('click', ()=>{
+      block.remove(); showProps(null);
+    });
+  }
 }
+
 
 function sanitize(s){ return s.replace(/</g,'&lt;').replace(/>/g,'&gt;') }
 

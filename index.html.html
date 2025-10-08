@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="google" content="notranslate"/>
+  <title>CLI Webbuilder</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background-color: rgb(15, 6, 95);
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding: 20px;
+      color: #0f0;
+    }
+
+    .cliContainer {
+      background-color: #111;
+      color: #0f0;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    }
+
+    .cliHeader {
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .cliInput, .cliTextArea {
+      width: 100%;
+      padding: 10px;
+      background-color: #000;
+      color: #0f0;
+      border: 1px solid #0f0;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    .cliTextArea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .cliFooter {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      text-align: right;
+    }
+
+    .outputArea {
+      margin-top: 10px;
+      background: #000;
+      color: #0f0;
+      font-size: 0.9rem;
+      padding: 10px;
+      height: 150px;
+      overflow-y: auto;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+
+    button {
+      background: #0f0;
+      color: #000;
+      border: none;
+      padding: 6px 12px;
+      margin-top: 5px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #5f5;
+    }
+    #functionEditor {
+        /*display: none;*/
+    }
+  </style>
+</head>
+<body>
+  <div class="cliContainer">
+    <div class="cliHeader">CLI Webbuilder</div>
+    
+    <input class="cliInput" id="cliInput" type="text" placeholder="Enter command..." />
+    <button onclick="runInputCommand()">Run Command</button>
+    <div id="functionEditor">
+            <textarea class="cliTextArea" id="cliScriptInput" placeholder="Paste .cliwbfunction content here..."></textarea>
+            
+            <button onclick="runScriptFromEditor()">Run Script</button>
+            <button onclick="downloadFunction()">Download</button>
+            <label style="display:inline-block; margin-top: 5px;">
+              <input type="file" id="functionFileInput" style="display: none;" accept=".cliwbfunction" onchange="uploadFunction()" />
+              <button onclick="document.getElementById('functionFileInput').click()">Upload</button>
+            </label>
+            
+            <br><button onclick="exitEditor()">Leave</button><br>
+          </div>
+          
+    <div class="outputArea" id="cliOutput"></div>
+    <div class="cliFooter">Commands: createElement, createStyle, exportHTML, runPage, reset</div>
+  </div>
+
+  <script>
+    const input = document.getElementById('cliInput');
+    const output = document.getElementById('cliOutput');
+    const scriptInput = document.getElementById('cliScriptInput');
+
+    const scripts = {
+      buildHome: [
+        'reset',
+        'createElement body h1 innerText=Hallo style:color=red style:font-size=2rem',
+        'createStyle h1 { text-align: center; }'
+      ]
+    };
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        runInputCommand();
+      }
+    });
+
+    function log(msg) {
+      output.textContent += msg + '\n';
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function runInputCommand() {
+      const cmd = input.value.trim();
+      if (!cmd) return;
+      handleCommand(cmd);
+      input.value = '';
+    }
+
+    function runScriptFromEditor() {
+      const lines = scriptInput.value.split('\n');
+      lines.forEach(line => {
+        if (line.trim()) {
+          handleCommand(line.trim());
+        }
+      });
+      log('Script from editor executed.');
+    }
+
+    function handleCommand(command) {
+      log('> ' + command);
+      const [cmd, ...args] = command.split(' ');
+
+      switch (cmd) {
+        case 'createElement':
+          handleCreateElement(args);
+          break;
+        case 'createStyle':
+          handleCreateStyle(args.join(' '));
+          break;
+        case 'exportHTML':
+          exportHTML();
+          break;
+        case 'reset':
+          resetPage();
+          break;
+        case 'run':
+          runNamedScript(args[0]);
+          break;
+        case 'runPage':
+          runPage();
+          break;
+          case 'openEditor':
+          openFunctionEditor();
+          break;
+        default:
+          log(`Unbekannter Befehl: ${cmd}`);
+      }
+    }
+
+    function handleCreateElement(args) {
+      const [target, type, ...rest] = args;
+
+      const attrs = {};
+      const styles = {};
+
+      for (const part of rest) {
+        if (part.startsWith('style:')) {
+          const [key, value] = part.replace('style:', '').split('=');
+          styles[key] = value;
+        } else {
+          const [key, value] = part.split('=');
+          attrs[key] = value;
+        }
+      }
+
+      const el = document.createElement(type);
+
+      for (const [key, value] of Object.entries(attrs)) {
+        if (key === 'innerText') el.innerText = value;
+        else el.setAttribute(key, value);
+      }
+
+      for (const [key, value] of Object.entries(styles)) {
+        el.style[key] = value;
+      }
+
+      const targetElement =
+        target === 'body' ? document.body :
+        target === 'head' ? document.head :
+        document.getElementById(target);
+
+      if (targetElement) {
+        targetElement.appendChild(el);
+        log(`Element <${type}> erstellt in <${target}>`);
+      } else {
+        log(`Ziel ${target} nicht gefunden`);
+      }
+    }
+
+    function handleCreateStyle(styleContent) {
+      const styleTag = document.createElement('style');
+      styleTag.textContent = styleContent;
+      document.head.appendChild(styleTag);
+      log('Style hinzugefügt.');
+    }
+
+    function exportHTML() {
+      const doctype = '<!DOCTYPE html>\n';
+      const html = document.documentElement.cloneNode(true);
+      const cli = html.querySelector('.cliContainer');
+      if (cli) cli.remove();
+      const htmlContent = doctype + html.outerHTML;
+      log('Exportierter HTML-Code:\n\n' + htmlContent);
+    }
+
+    function resetPage() {
+      const body = document.body;
+      [...body.children].forEach(child => {
+        if (!child.classList.contains('cliContainer')) {
+          body.removeChild(child);
+        }
+      });
+      const head = document.head;
+      [...head.querySelectorAll('style')].forEach(s => {
+        if (!s.dataset.static) head.removeChild(s);
+      });
+      log('Seite zurückgesetzt.');
+    }
+
+    function runNamedScript(name) {
+      const script = scripts[name];
+      if (!script) {
+        log(`Script "${name}" nicht gefunden.`);
+        return;
+      }
+      log(`Führe Script "${name}" aus...`);
+      for (const line of script) {
+        handleCommand(line);
+      }
+    }
+
+    function runPage() {
+      const doctype = '<!DOCTYPE html>\n';
+      const html = document.documentElement.cloneNode(true);
+      const cli = html.querySelector('.cliContainer');
+      if (cli) cli.remove();
+      const htmlContent = doctype + html.outerHTML;
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+
+      window.open(url, '_blank');
+      log('Seite in neuem Tab geöffnet.');
+    }
+    function openFunctionEditor() {
+        const editor = document.getElementById("functionEditor");
+        editor.style.display = "block";
+    }
+    function exitEditor() {
+        const editor = document.getElementById("functionEditor");
+        editor.style.display = "none";
+    }
+    function downloadFunction() {
+    const content = document.getElementById('cliScriptInput').value;
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    if (!content) {alert("How boring would it be to download empty files?!?")} else {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'script.cliwbfunction';
+    a.click();
+
+    URL.revokeObjectURL(url);
+    log('Script als .cliwbfunction heruntergeladen.');
+    }
+  }
+
+  function uploadFunction() {
+    const input = document.getElementById('functionFileInput');
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('cliScriptInput').value = e.target.result;
+      log(`Datei "${file.name}" geladen.`);
+    };
+    reader.readAsText(file);
+  }
+  </script>
+</body>
+</html>

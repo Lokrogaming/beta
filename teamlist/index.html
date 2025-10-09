@@ -1,1 +1,337 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teamverzeichnis — Discord & Communities</title>
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --glass-bg: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.08);
+      --accent: #7ae1ff;
+      --muted: rgba(255,255,255,0.65);
+      --card-radius: 14px;
+      --gap: 18px;
+      --max-width: 1100px;
+      --glass-blur: 8px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color: #fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+
+    /* Container */
+    .wrap{
+      width:100%;
+      max-width:var(--max-width);
+      display:grid;
+      gap:var(--gap);
+      grid-template-columns:1fr;
+    }
+
+    /* Two main glass cards: Discords + Communities (stacked on small screens) */
+    .group-card{
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border-radius: calc(var(--card-radius));
+      padding:20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    }
+
+    .group-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .group-title{font-weight:700; letter-spacing:0.2px}
+    .subtle{color:var(--muted); font-size:13px}
+
+    /* Server icons row */
+    .server-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    /* App-like server icon */
+    .server{
+      width:64px;
+      height:64px;
+      border-radius:14px; /* rounded square like Apple */
+      background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      cursor:pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      border:1px solid rgba(255,255,255,0.04);
+      overflow:hidden;
+    }
+    .server img{width:86%; height:86%; object-fit:cover; border-radius:10px}
+
+    /* Hover name tooltip above the icon */
+    .server .tooltip{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%) translateY(8px);
+      bottom:100%;
+      padding:6px 10px;
+      background:rgba(0,0,0,0.6);
+      border-radius:8px;
+      font-size:13px;
+      white-space:nowrap;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 180ms ease, transform 180ms ease;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.04);
+    }
+    .server:hover{transform:translateY(-8px); box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+    .server:hover .tooltip{opacity:1; transform:translateX(-50%) translateY(0)}
+
+    /* Expanded glass cards that pop up when clicking a server */
+    .expand-container{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+      gap:12px;
+      margin-top:14px;
+    }
+    .expand-card{
+      padding:12px;
+      border-radius:12px;
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      transform-origin:top center;
+      animation:pop 220ms cubic-bezier(.2,.9,.28,1);
+    }
+    @keyframes pop{from{opacity:0; transform:translateY(-8px) scale(.98)} to{opacity:1; transform:translateY(0) scale(1)}}
+
+    /* Team list styles */
+    .team-lists{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    .list{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:10px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .role{font-weight:600; font-size:14px}
+    .member{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:8px;margin-top:6px}
+    .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,var(--accent), rgba(0,0,0,0.2));display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#092;flex:0 0 36px}
+    .member .meta{display:flex;flex-direction:column}
+    .member .name{font-weight:600}
+    .member .small{font-size:12px;color:var(--muted)}
+
+    /* Responsive tweaks */
+    @media (max-width:900px){
+      .team-lists{grid-template-columns:1fr}
+      .server{width:56px;height:56px}
+    }
+    @media (max-width:520px){
+      body{padding:18px}
+      .server{width:48px;height:48px}
+      .wrap{gap:12px}
+    }
+
+    /* Footer note inside page */
+    .hint{font-size:13px;color:var(--muted); margin-top:10px}
+
+    /* small accessible focus outline */
+    .server:focus{outline:3px solid rgba(122,225,255,0.12); outline-offset:3px}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Discords Card -->
+    <section class="group-card" aria-labelledby="discordsTitle">
+      <div class="group-header">
+        <div>
+          <div id="discordsTitle" class="group-title">Discords</div>
+          <div class="subtle">Klicke ein Server-Icon, um Details zu sehen</div>
+        </div>
+        <div class="subtle">2 Cards — Discords & Communities</div>
+      </div>
+
+      <!-- server icons row -->
+      <div class="server-row" id="serverRow">
+        <!-- Beispiel-Server 1 -->
+        <button class="server" data-server="alpha" aria-expanded="false" aria-controls="alphaCard">
+          <img src="https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=512" alt="Alpha Server Icon">
+          <span class="tooltip">Alpha Server</span>
+        </button>
+
+        <!-- Beispiel-Server 2 -->
+        <button class="server" data-server="beta" aria-expanded="false" aria-controls="betaCard">
+          <img src="https://via.placeholder.com/128/111827/ffffff?text=B" alt="Beta Server Icon">
+          <span class="tooltip">Beta Server</span>
+        </button>
+
+        <!-- Beispiel-Server 3 -->
+        <button class="server" data-server="gamma" aria-expanded="false" aria-controls="gammaCard">
+          <img src="https://via.placeholder.com/128/0b1220/ffffff?text=G" alt="Gamma Server Icon">
+          <span class="tooltip">Gamma Server</span>
+        </button>
+      </div>
+
+      <!-- Expand area: dynamisch gefüllte 'glass' cards -->
+      <div class="expand-container" id="expandArea" aria-live="polite"></div>
+
+    </section>
+
+    <!-- Communities Card -->
+    <section class="group-card" aria-labelledby="communitiesTitle">
+      <div class="group-header">
+        <div>
+          <div id="communitiesTitle" class="group-title">Community- & Teamverzeichnis</div>
+          <div class="subtle">Oben: Rollennamen — Unten: Mitglieder (mit Rollen)</div>
+        </div>
+        <div class="subtle">Responsive & Glass-Design</div>
+      </div>
+
+      <div class="team-lists">
+        <!-- Rollen-Liste (oben) -->
+        <div class="list" aria-labelledby="rolesTitle">
+          <div id="rolesTitle" class="role">Rollen</div>
+          <div class="small-list subtle" style="margin-top:8px">
+            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent)"></div><div style="margin-left:8px">Admin</div></div>
+            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:#9b8cff"></div><div style="margin-left:8px">Moderator</div></div>
+            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:#ffb86b"></div><div style="margin-left:8px">Support</div></div>
+            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:#7ef0a4"></div><div style="margin-left:8px">Member</div></div>
+          </div>
+        </div>
+
+        <!-- Member-Liste (unten) -->
+        <div class="list" aria-labelledby="membersTitle">
+          <div id="membersTitle" class="role">Mitglieder</div>
+
+          <div class="member">
+            <div class="avatar">MJ</div>
+            <div class="meta"><div class="name">Maja Jansen</div><div class="small">Admin • Online</div></div>
+          </div>
+
+          <div class="member">
+            <div class="avatar">TK</div>
+            <div class="meta"><div class="name">Timo Krüger</div><div class="small">Moderator • Letzte Aktivität: 2h</div></div>
+          </div>
+
+          <div class="member">
+            <div class="avatar">AL</div>
+            <div class="meta"><div class="name">Alex L.</div><div class="small">Support • Online</div></div>
+          </div>
+
+          <div class="member">
+            <div class="avatar">SN</div>
+            <div class="meta"><div class="name">Sarah N.</div><div class="small">Member • Offline</div></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="hint">Tipp: Icons durch eigene Bilder ersetzen. Größe: ideal 512×512, quadratisch.</div>
+    </section>
+
+  </div>
+
+  <script>
+    /* Beispiel: Datenstruktur für Server-Details. In realem Projekt durch API/JSON ersetzen. */
+    const serverData = {
+      alpha:{
+        title:'Alpha Server',
+        desc:'Community für Entwickler und Hobby-Projekte',
+        channels:['#ankündigungen','#dev','#random'],
+        members:[{name:'Maja Jansen',role:'Admin'},{name:'Timo Krüger',role:'Moderator'},{name:'Alex L.',role:'Support'}]
+      },
+      beta:{
+        title:'Beta Server',
+        desc:'Gaming & Events',
+        channels:['#news','#events','#matchmaking'],
+        members:[{name:'Lukas',role:'Admin'},{name:'Nora',role:'Member'}]
+      },
+      gamma:{
+        title:'Gamma Server',
+        desc:'Design & Art Community',
+        channels:['#showcase','#critiques','#resources'],
+        members:[{name:'Sarah',role:'Moderator'},{name:'Jon',role:'Member'}]
+      }
+    };
+
+    const expandArea = document.getElementById('expandArea');
+    const serverButtons = document.querySelectorAll('.server');
+
+    function createExpandCard(key){
+      const data = serverData[key];
+      if(!data) return null;
+      const card = document.createElement('div');
+      card.className = 'expand-card';
+      card.id = key + 'Card';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:56px;height:56px;border-radius:10px;overflow:hidden"><img src=\"https://via.placeholder.com/256/222222/ffffff?text=${encodeURIComponent(data.title.charAt(0))}\" alt=\"${data.title}\" style=\"width:100%;height:100%;object-fit:cover\"></div>
+          <div style="flex:1">
+            <div style="font-weight:700">${data.title}</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:4px">${data.desc}</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--muted)">Channels:</div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">${data.channels.map(c => `<div style=\"padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);font-size:13px;border:1px solid rgba(255,255,255,0.02)\">${c}</div>`).join('')}</div>
+        <div style="margin-top:10px;font-size:14px;font-weight:600">Mitglieder</div>
+        <div style="margin-top:6px">${data.members.map(m => `<div style=\"display:flex;align-items:center;gap:8px;padding:6px;border-radius:8px;margin-top:6px\"><div style=\"width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg,var(--accent), rgba(0,0,0,0.2));display:flex;align-items:center;justify-content:center;font-weight:700\">${m.name.split(' ').map(s=>s[0]).slice(0,2).join('')}</div><div><div style=\"font-weight:600\">${m.name}</div><div style=\"font-size:12px;color:var(--muted)\">${m.role}</div></div></div>`).join('')}</div>
+      `;
+      return card;
+    }
+
+    function toggleServer(e){
+      const btn = e.currentTarget;
+      const key = btn.dataset.server;
+      const existing = document.getElementById(key + 'Card');
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+      // Close if open
+      if(isExpanded){
+        if(existing) existing.remove();
+        btn.setAttribute('aria-expanded','false');
+        return;
+      }
+
+      // Otherwise close other open cards and open this one
+      document.querySelectorAll('.server').forEach(s=>s.setAttribute('aria-expanded','false'));
+      expandArea.innerHTML = ''; // single open card behaviour; remove if you want multiples
+
+      const card = createExpandCard(key);
+      if(card){
+        expandArea.appendChild(card);
+        btn.setAttribute('aria-expanded','true');
+        card.scrollIntoView({behavior:'smooth', block:'nearest'});
+      }
+    }
+
+    serverButtons.forEach(b => { b.addEventListener('click', toggleServer); b.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggleServer({currentTarget:b}); } }); });
+
+  </script>
+</body>
+</html>
 

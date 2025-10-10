@@ -18,6 +18,10 @@
     }
     *{box-sizing:border-box;}
     html,body{height:100%}
+    ::selection {
+  background: transparent; /* deine Wunschfarbe (Discord-Blau z. B.) */
+          /* Schriftfarbe während Markierung */
+}
     body{
       margin:0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -27,7 +31,7 @@
       background-position: center, auto;
       background-attachment: fixed;
       background-size: cover;
-      
+      user-select:none;
       color: #fff;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -281,6 +285,24 @@ button, a, body, div, section {
 .disabled {
   display:none;
 }
+.moreServers {
+ width:64px;
+      height:64px;
+     border-radius: 14px;
+      box-shadow:0 9px 28px rgba(0,0,0,1);
+ /* rounded square like Apple */
+      background:/*linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01))*/transparent;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      color:white;
+      font-size: 30px;
+      font-weight: 800;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      border:none;
+      overflow:hidden;
+}
   </style>
 </head>
 <body>
@@ -347,6 +369,11 @@ button, a, body, div, section {
           <img src="https://cdn.discordapp.com/icons/1348097190039392296/704be7d63dbd675db86fe099b61c7b35.png?size=128&quality=lossless" alt="Star Development Server Icon">
           <span class="tooltip">Stardevelopment</span>
         </button>
+        &nbsp;&nbsp;&nbsp;
+        <button class="server moreServers">
+          5+
+          
+        </button>
       </div>
 
       
@@ -400,16 +427,22 @@ counters.forEach(counter => {
         img:{src:"https://cdn.discordapp.com/icons/1301611966657466399/2942e75dd548e1f0ff378dd879b3f472.png?size=128&quality=lossless", alt:"Lokrogaming Logo"},
         memberCount: "20+ User",
         specials:[
-        {roleColor:1,name:'Lokrogamer',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'},
-        {roleColor:2,name:'Reu Clopps',role:'Co-Owner',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=32"},
-        {roleColor:3,name:'Eministar',role:'Head-Developer',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=80"},
-        {roleColor:5,name:"Chris Vhailor", role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/154589532384264192/c391f9001bce1b49491318b5fd377b27.webp?size=32"},
-        {roleColor:5,name:"Zar",role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/334742694255656970/85245a5169cae5106ac5063d7a202793.webp?size=32"}
+        {roleColor:1,name:'Lokrogamer',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=128'},
+        {roleColor:2,name:'Reu Clopps',role:'Co-Owner',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=128"},
+        {roleColor:3,name:'Eministar',role:'Head-Developer',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=128"},
+        {roleColor:5,name:"Chris Vhailor", role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/154589532384264192/c391f9001bce1b49491318b5fd377b27.webp?size=128"},
+        {roleColor:5,name:"Zar",role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/334742694255656970/85245a5169cae5106ac5063d7a202793.webp?size=128"}
       ],
         members:[
         
-        {roleColor:7,name:"N03LK1LL3R5",role:"Ultra Lifetime",avatarImg:"https://cdn.discordapp.com/avatars/1021748213679665162/0173ec5dbb16900f0bcc82466411fc50.webp?size=80"}
-      ]
+        {roleColor:7,name:"N03LK1LL3R5",role:"Ultra Lifetime",avatarImg:"https://cdn.discordapp.com/avatars/1021748213679665162/0173ec5dbb16900f0bcc82466411fc50.webp?size=80"},
+      {roleColor:4,name:"Steak_Gamin",role:"Member",avatarImg:"https://cdn.discordapp.com/avatars/1295025346013429761/25a836f7bbcbefa1ea76c8b94f5c5372.webp?size=128"},
+      {roleColor:4,name:"tqkr61",role:"Member",avatarImg:"https://cdn.discordapp.com/avatars/1419676905958805566/fd0ddbc56360954f348a2ca9f48568df.webp?size=128"},
+      {roleColor:4,name:"flobg19",role:"Member",avatarImg:"https://cdn.discordapp.com/avatars/461529181558276097/c84b7b0f9b86cc792916c8882b18dea7.webp?size=128"},
+      {roleColor:4,name:"dcs.lol Bot",role:"App Bot Member",avatarImg:"https://cdn.discordapp.com/avatars/1381669516735680672/c9a37a887d38d3d1241f7234330875a6.webp?size=128"},
+       {roleColor:4,name:"Big H",role:"Member",avatarImg:"https://cdn.discordapp.com/avatars/1266361526420373567/f58b7f4fb728e7372dcce95f1902178c.webp?size=128"}
+    
+    ]
       },
       portfoleez:{
         memberCount: "5+ User",

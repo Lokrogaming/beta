@@ -7,7 +7,7 @@
   <style>
     :root{
       --bg:#0b0b0b;
-      --glass-bg: rgba(255,255,255,0.06);
+      --glass-bg: rgba(11, 11, 11, 0.5);
       --glass-border: rgba(255,255,255,0.08);
       --accent: #7ae1ff;
       --muted: rgba(255,255,255,0.65);
@@ -32,6 +32,7 @@
       align-items:center;
       justify-content:center;
       padding:32px;
+      cursor: url("mauszeiger.png"), auto;
     }
 
     /* Container */
@@ -92,7 +93,7 @@
       align-items:center;
       justify-content:center;
       position:relative;
-      cursor:pointer;
+      
       transition: transform 180ms ease, box-shadow 180ms ease;
       border:none;
       overflow:hidden;
@@ -185,13 +186,123 @@
   max-height: 1000px; /* ausreichend groß wählen */
   opacity: 1;
 }
+.footer {
+      position:absolute;
+      bottom:1%;
+      right:50%;
+      padding:8px;
+      border-radius:5px;
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      transform-origin:top center;
+      justify-content:center;
+      align-items:center;
+      display:flex;
+      text-decoration:none;
+      flex-direction: column;
+      color:var(--muted);
+}
+.muted {
+  color: var(--muted);
+  font-size: 8px;
+}
+.credits a {
+  font-size: 5px;
+  text-decoration: none;
+  color: var(--muted);
+}
+button, a, body, div, section {
+  cursor: url("mauszeiger.png"), auto;
+}
+.title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 12px;
+}
 
+.title .gradient {
+  background: linear-gradient(90deg, #a97aff, #4dd5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 500;
+}
+/* Counter Section */
+.counters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 60px 0;
+}
+
+.counter-card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  padding: 30px;
+  text-align: center;
+  width: 200px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+
+.counter-card:hover {
+  transform: translateY(-10px);
+  transition: 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.5);
+  
+}
+
+.counter-number {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.counter-label {
+  font-size: 1rem;
+  color: var(--text);
+}
+.memberCount {
+  align-self:center;
+  font-weight: bolder;
+}
+.disabled {
+  display:none;
+}
   </style>
 </head>
 <body>
-  
+ 
   <div class="wrap">
+<h1 class="title">
+  <span class="gradient">TEAM</span>VERZEICHNIS
+</h1>
+<p class="subtitle">Finde alle unserer Teams und Partner schnell und einfach!</p>
+<p class="muted">Du suchst eine Teamlist, wo du ganz einfach dein Team  und Mitglieder einfach vorstellen kannst? Dann komm mit ins Boot zu LokroGaming!</p>
 
+<div class="counters">
+    <div class="counter-card">
+      <div class="counter-number" data-target="100">0</div>
+      <div class="counter-label">Getrustete User</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-number" data-target="50">0</div>
+      <div class="counter-label">mal genutzt</div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-number" data-target="10">0</div>
+      <div class="counter-label">Partnerprojekte</div>
+    </div>
+  </div>
     <!-- Discords Card -->
     <section class="group-card" aria-labelledby="discordsTitle">
       <div class="group-header">
@@ -202,21 +313,21 @@
        
       </div>
 
-      <!-- server icons row -->
+      
       <div class="server-row" id="serverRow">
-        <!-- Beispiel-Server 1 -->
+        
         <button class="server" data-server="lolde" aria-expanded="false" aria-controls="alphaCard">
           <img class="icon" src="https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=128" alt="lolde Server Icon">
           <span class="tooltip">.lol/deutschland</span>
         </button>
 
-        <!-- Beispiel-Server 2 -->
+        
         <button class="server" data-server="lokrogaming" aria-expanded="false" aria-controls="betaCard">
           <img class="icon" src="https://cdn.discordapp.com/icons/1301611966657466399/2942e75dd548e1f0ff378dd879b3f472.png?size=128&quality=lossless" alt="Lokrogaming Server Icon">
           <span class="tooltip">Lokrogaming</span>
         </button>
 
-        <!-- Beispiel-Server 3 -->
+        
         <button class="server" data-server="lokrogames" aria-expanded="false" aria-controls="gammaCard">
           <img src="https://cdn.discordapp.com/icons/1421201523643252839/bc914fe6ead2501f36c0e19a7d2a8d3a.png?size=128&quality=lossless" alt="LokroGames Server Icon">
           <span class="tooltip">Lokrogames</span>
@@ -227,20 +338,46 @@
           <img src="https://cdn.discordapp.com/icons/1398373615996506212/4ca015983c0c20402992910f3168083f.png?size=128&quality=lossless" alt="Portfoleez Server Icon">
           <span class="tooltip">Portfoleez</span>
         </button>
+
+
+        <button class="server" data-server="stardev" aria-expanded="false" aria-controls="gammaCard">
+          <img src="https://cdn.discordapp.com/icons/1348097190039392296/704be7d63dbd675db86fe099b61c7b35.png?size=128&quality=lossless" alt="Star Development Server Icon">
+          <span class="tooltip">Stardevelopment</span>
+        </button>
       </div>
 
-      <!-- Expand area: dynamisch gefüllte 'glass' cards -->
+      
       <div class="expand-container" id="expandArea" aria-live="polite"></div>
 
     </section>
-
+<br>
     
-        
-
+        <div class="footer">
+          <small class="muted">Powered by LokroGaming❤️</small>
+          <p class="credits"><a href="https://www.flaticon.com/de/kostenlose-icons/zeiger" title="zeiger Icons">Zeiger Icons erstellt von nixxdsgn - Flaticon</a></p>
+        </div>
+<br>
   <script>
-   
+   // Counter Animation
+const counters = document.querySelectorAll('.counter-number');
+counters.forEach(counter => {
+  const update = () => {
+    const target = +counter.getAttribute('data-target');
+    const current = +counter.innerText;
+    const increment = target / 80; // Geschwindigkeit
+
+    if (current < target) {
+      counter.innerText = Math.ceil(current + increment);
+      requestAnimationFrame(update);
+    } else {
+      counter.innerText = '+' + target;
+    }
+  };
+  update();
+});
     const serverData = {
       lolde:{
+        memberCount: "5+ User",
         img:'https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=512',
         title:'.lol/deutschland',
         desc:'Der deutscheste Discord',
@@ -258,6 +395,7 @@
        title:'Lokrogaming',
         desc:'Der offizielle Discord Sever von Lokrogaming',
         img:{src:"https://cdn.discordapp.com/icons/1301611966657466399/2942e75dd548e1f0ff378dd879b3f472.png?size=128&quality=lossless", alt:"Lokrogaming Logo"},
+        memberCount: "20+ User",
         specials:[
         {roleColor:1,name:'Lokrogamer',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'},
         {roleColor:2,name:'Reu Clopps',role:'Co-Owner',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=32"},
@@ -271,6 +409,7 @@
       ]
       },
       portfoleez:{
+        memberCount: "5+ User",
        title:'Portfoleez',
         desc:'Der offizielle Supportserver von Portfoleez [Powered by LokroGaming]',
         img:{src:"https://cdn.discordapp.com/icons/1398373615996506212/4ca015983c0c20402992910f3168083f.png?size=128&quality=lossless", alt:"Portfoleez Logo"},
@@ -281,10 +420,28 @@
         members:[
         
         {name:"flobg19",avatarImg:"https://cdn.discordapp.com/avatars/461529181558276097/c84b7b0f9b86cc792916c8882b18dea7.webp?size=128"},
-        {name:"Vronleng",avatarImg:"https://cdn.discordapp.com/avatars/1422170902161920171/d0e25fdf0043adb80b86f4eb52cb95d8.webp?size=32"}
+        {name:"Vronleng",avatarImg:"https://cdn.discordapp.com/avatars/1422170902161920171/d0e25fdf0043adb80b86f4eb52cb95d8.webp?size=128"}
+      ]
+      },
+      stardev:{
+        memberCount: "750+ User",
+        title:'Stardevelopement',
+        desc:'Coding, Projects, Support, Updates',
+        img:{src:"https://cdn.discordapp.com/avatars/1348103763201888407/c6603351a9dcc6f88fc8d0087025592f.webp?size=512", alt:"Stardev Logo"},
+        specials:[
+        {roleColor:"#71368a",name:'EminiBot',role:'Stardev, Bot', avatarImg:'https://cdn.discordapp.com/avatars/1348103763201888407/c6603351a9dcc6f88fc8d0087025592f.webp?size=128'},
+        {roleColor:"#71368a",name:'Eministar',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=128'},
+        {roleColor:"#71368a",name:'Mio',role:'Co-Owner', avatarImg:'9855d7e3b9780976.png'},
+        {roleColor:"#71368a",name:'Lokrogamer',role:'Co-Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922.webp?size=128'},
+        
+      ],
+        members:[
+        
+        
       ]
       },
       lokrogames:{
+        memberCount: "3+ User",
         title:'LokroGames',
         desc:'Alles rund ums zocken und die Gamentwicklung',
         img:{src:"https://cdn.discordapp.com/icons/1421201523643252839/bc914fe6ead2501f36c0e19a7d2a8d3a.png?size=128&quality=lossless", alt:"Lokrogames Logo"},
@@ -292,7 +449,7 @@
           {roleColor:1,name:'Lokrogamer',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'}
         ],
         members:[
-        {name:'Reu Clopps',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=32"}
+        {name:'Reu Clopps',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=128"}
       ]
       }
     };
@@ -312,6 +469,7 @@ function getRoleColor(roleColor) {
     7: "#206694", //ULTRA-LIFETIME
     8: "#99aab5", //GREY
     9: "#e67e22" //GOLDBROWN
+    
   };
 
   if (typeof roleColor === "number") {
@@ -370,7 +528,9 @@ function createExpandCard(key) {
               <div style="font-size:12px;color:var(--muted)">${m.role||""}</div>
             </div>
           </div>`;
-      }).join('')}
+      }).join('') || ""}
+    <p class="memberCount"> ${data.memberCount}</p>
+
     </div>
   `;
   return card;
@@ -381,11 +541,13 @@ function toggleServer(e) {
   const key = btn.dataset.server;
   const existing = document.getElementById(key + 'Card');
   const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+  
 
   if (isExpanded) {
     expandArea.classList.remove('active');
     expandArea.innerHTML = '';
     btn.setAttribute('aria-expanded', 'false');
+    
     return;
   }
 
@@ -397,6 +559,7 @@ function toggleServer(e) {
     expandArea.appendChild(card);
     expandArea.classList.add('active');
     btn.setAttribute('aria-expanded', 'true');
+    
   }
 }
 
@@ -411,6 +574,8 @@ serverButtons.forEach(b => {
 });
 
   </script>
+  
+
 </body>
 </html>
 

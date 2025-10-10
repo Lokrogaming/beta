@@ -64,27 +64,35 @@
     /* Server icons row */
     .server-row{
       display:flex;
-      gap:12px;
+      gap:14px;
       align-items:center;
       flex-wrap:wrap;
     }
+.icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;  /* nur nötig, falls das Icon-Element ein Container ist */
+  object-fit: cover;  /* bei <img>, um das Bild korrekt zu skalieren */
+}
 
     /* App-like server icon */
     .server{
-      width:64px;
-      height:64px;
-      border-radius:14px; /* rounded square like Apple */
-      background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      width:128px;
+      height:128px;
+     border-radius: 14px;
+ /* rounded square like Apple */
+      background:/*linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01))*/transparent;
       display:flex;
       align-items:center;
       justify-content:center;
       position:relative;
       cursor:pointer;
       transition: transform 180ms ease, box-shadow 180ms ease;
-      border:1px solid rgba(255,255,255,0.04);
+      border:none;
       overflow:hidden;
     }
-    .server img{width:86%; height:86%; object-fit:cover; border-radius:10px}
+    .server img{width:95%; height:90%; object-fit:cover; border-radius:10px}
 
     /* Hover name tooltip above the icon */
     .server .tooltip{
@@ -120,7 +128,7 @@
       border:1px solid var(--glass-border);
       backdrop-filter: blur(var(--glass-blur));
       transform-origin:top center;
-      animation:pop 220ms cubic-bezier(.2,.9,.28,1);
+      animation:pop 2s cubic-bezier(.2,.9,.28,1);
     }
     @keyframes pop{from{opacity:0; transform:translateY(-8px) scale(.98)} to{opacity:1; transform:translateY(0) scale(1)}}
 
@@ -143,7 +151,8 @@
     .member .meta{display:flex;flex-direction:column}
     .member .name{font-weight:600}
     .member .small{font-size:12px;color:var(--muted)}
-
+    .memberInnerServer:hover{transform:translateY(-8px); box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+    .memberInnerServer{transition:opacity 180ms ease, transform 200ms ease;}
     /* Responsive tweaks */
     @media (max-width:900px){
       .team-lists{grid-template-columns:1fr}
@@ -173,27 +182,27 @@
           <div id="discordsTitle" class="group-title">Discords</div>
           <div class="subtle">Klicke ein Server-Icon, um Details zu sehen</div>
         </div>
-        <div class="subtle">2 Cards — Discords & Communities</div>
+       
       </div>
 
       <!-- server icons row -->
       <div class="server-row" id="serverRow">
         <!-- Beispiel-Server 1 -->
-        <button class="server" data-server="alpha" aria-expanded="false" aria-controls="alphaCard">
-          <img src="https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=512" alt="Alpha Server Icon">
-          <span class="tooltip">Alpha Server</span>
+        <button class="server" data-server="lolde" aria-expanded="false" aria-controls="alphaCard">
+          <img class="icon" src="https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=128" alt="lolde Server Icon">
+          <span class="tooltip">.lol/deutschland</span>
         </button>
 
         <!-- Beispiel-Server 2 -->
-        <button class="server" data-server="beta" aria-expanded="false" aria-controls="betaCard">
-          <img src="https://via.placeholder.com/128/111827/ffffff?text=B" alt="Beta Server Icon">
-          <span class="tooltip">Beta Server</span>
+        <button class="server" data-server="lokrogaming" aria-expanded="false" aria-controls="betaCard">
+          <img class="icon" src="https://cdn.discordapp.com/icons/1301611966657466399/2942e75dd548e1f0ff378dd879b3f472.png?size=128&quality=lossless" alt="Lokrogaming Server Icon">
+          <span class="tooltip">Lokrogaming</span>
         </button>
 
         <!-- Beispiel-Server 3 -->
-        <button class="server" data-server="gamma" aria-expanded="false" aria-controls="gammaCard">
-          <img src="https://via.placeholder.com/128/0b1220/ffffff?text=G" alt="Gamma Server Icon">
-          <span class="tooltip">Gamma Server</span>
+        <button class="server" data-server="lokrogames" aria-expanded="false" aria-controls="gammaCard">
+          <img src="https://cdn.discordapp.com/icons/1421201523643252839/bc914fe6ead2501f36c0e19a7d2a8d3a.png?size=128&quality=lossless" alt="LokroGames Server Icon">
+          <span class="tooltip">Lokrogames</span>
         </button>
       </div>
 
@@ -259,76 +268,159 @@
   <script>
     /* Beispiel: Datenstruktur für Server-Details. In realem Projekt durch API/JSON ersetzen. */
     const serverData = {
-      alpha:{
-        img:'https://cdn.discordapp.com/user',
+      lolde:{
+        img:'https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=512',
         title:'.lol/deutschland',
         desc:'Der deutscheste Discord',
-        members:[{name:'Lokrogamer',role:'Admin', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'},{name:'Timo Krüger',role:'Moderator'},{name:'Alex L.',role:'Support'}]
+        img:{src:"https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=128&quality=lossless", alt:"lolde Logo"},
+        specials:[
+        {roleColor:8,name:'Lokrogamer',role:'👑・Inhaber', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'},
+        {roleColor:8,name:'Eministar',role:'👑・Inhaber',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=1024"}
+        
+      ],
+        members:[
+        {roleColor:8,name:"Max Mustermann",role:"Bot",avatarImg:"https://cdn.discordapp.com/avatars/1416056934246649977/cccd546dff5bd2f2694ce8c11ad4cda8.webp?size=32"}
+      ]
       },
-      beta:{
-        title:'Beta Server',
-        desc:'Gaming & Events',
-        channels:['#news','#events','#matchmaking'],
-        members:[{name:'Lukas',role:'Admin'},{name:'Nora',role:'Member'}]
+      lokrogaming:{
+       title:'Lokrogaming',
+        desc:'Der offizielle Discord Sever von Lokrogaming',
+        img:{src:"https://cdn.discordapp.com/icons/1301611966657466399/2942e75dd548e1f0ff378dd879b3f472.png?size=128&quality=lossless", alt:"Lokrogaming Logo"},
+        specials:[
+        {roleColor:1,name:'Lokrogamer',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'},
+        {roleColor:2,name:'Reu Clopps',role:'Co-Owner',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=32"},
+        {roleColor:3,name:'Eministar',role:'Head-Developer',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=80"},
+        {roleColor:5,name:"Chris Vhailor", role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/154589532384264192/c391f9001bce1b49491318b5fd377b27.webp?size=32"},
+        {roleColor:5,name:"Zar",role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/334742694255656970/85245a5169cae5106ac5063d7a202793.webp?size=32"}
+      ],
+        members:[
+        
+        {roleColor:7,name:"N03LK1LL3R5",role:"Ultra Lifetime",avatarImg:"https://cdn.discordapp.com/avatars/1021748213679665162/0173ec5dbb16900f0bcc82466411fc50.webp?size=80"}
+      ]
       },
-      gamma:{
-        title:'Gamma Server',
-        desc:'Design & Art Community',
-        channels:['#showcase','#critiques','#resources'],
-        members:[{name:'Sarah',role:'Moderator'},{name:'Jon',role:'Member'}]
+      lokrogames:{
+        title:'LokroGames',
+        desc:'Alles rund ums zocken und die Gamentwicklung',
+        img:{src:"https://cdn.discordapp.com/icons/1421201523643252839/bc914fe6ead2501f36c0e19a7d2a8d3a.png?size=128&quality=lossless", alt:"Lokrogames Logo"},
+        specials:[
+          {roleColor:1,name:'Lokrogamer',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'}
+        ],
+        members:[
+        {name:'Reu Clopps',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=32"}
+      ]
       }
     };
 
     const expandArea = document.getElementById('expandArea');
-    const serverButtons = document.querySelectorAll('.server');
+const serverButtons = document.querySelectorAll('.server');
 
-    function createExpandCard(key){
-      const data = serverData[key];
-      if(!data) return null;
-      const card = document.createElement('div');
-      card.className = 'expand-card';
-      card.id = key + 'Card';
-      card.innerHTML = `
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:56px;height:56px;border-radius:10px;overflow:hidden"><img src=\"${data.img}" alt=\"${data.title}\" style=\"width:100%;height:100%;object-fit:cover\"></div>
-          <div style="flex:1">
-            <div style="font-weight:700">${data.title}</div>
-            <div style="font-size:13px;color:var(--muted);margin-top:4px">${data.desc}</div>
-          </div>
-        </div>
-        
-        <div style="margin-top:10px;font-size:14px;font-weight:600">Mitglieder</div>
-        <div style="margin-top:6px">${data.members.map(m => `<div style=\"display:flex;align-items:center;gap:8px;padding:6px;border-radius:8px;margin-top:6px\"><div style=\"width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg,var(--accent), rgba(0,0,0,0.2));display:flex;align-items:center;justify-content:center;font-weight:700\"><img src='${m.avatarImg}' class='avatar'></div><div><div style=\"font-weight:600\">${m.name}</div><div style=\"font-size:12px;color:var(--muted)\">${m.role}</div></div></div>`).join('')}</div>
-      `;
-      return card;
+// 🟡 Discord Preset Farben
+function getRoleColor(roleColor) {
+  const discordPresets = {
+    1: "#f1c40f", // OWNER
+    2: "#a84300", //CO-OWNER
+    3: "#3498db", //HEAD-DEV
+    4: "#1be013", //DEV
+    5: "#e91e63", //ADMIN
+    6: "#11806a", //MODERATOR
+    7: "#206694", //ULTRA-LIFETIME
+    8: "#99aab5" //GREY
+  };
+
+  if (typeof roleColor === "number") {
+    return discordPresets[roleColor] || "#99AAB5";
+  }
+  if (typeof roleColor === "string" && roleColor.startsWith("#")) {
+    return roleColor;
+  }
+  return "white"; // Fallback
+}
+
+function createExpandCard(key) {
+  const data = serverData[key];
+  if (!data) return null;
+
+  const card = document.createElement('div');
+  card.className = 'expand-card';
+  card.id = key + 'Card';
+  card.innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:56px;height:56px;border-radius:10px;overflow:hidden">
+        <img src="${data.img.src}" alt="${data.title||data.img.alt}" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div style="flex:1">
+        <div style="font-weight:700">${data.title}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px">${data.desc}</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:14px;font-weight:600">Team und Highranks</div>
+    <div style="margin-top:6px">
+      ${data.specials.map(s => {
+        const color = getRoleColor(s.roleColor); // 👈 hier kommt die Farbe rein
+        return `
+          <div class="memberInnerServer" style="display:flex;align-items:center;gap:8px;padding:6px;border-radius:8px;margin-top:6px">
+            <div style="width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;">
+              <img src='${s.avatarImg}' class='avatar' style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div>
+              <div style="font-weight:600;color:${color}">${s.name}</div>
+              <div style="font-size:12px;color:var(--muted)">${s.role}</div>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+    <div style="margin-top:10px;font-size:14px;font-weight:600">Mitglieder</div>
+    <div style="margin-top:6px">
+      ${data.members.map(m => {
+        const color = getRoleColor(m.roleColor); // 👈 hier kommt die Farbe rein
+        return `
+          <div class="memberInnerServer" style="display:flex;align-items:center;gap:8px;padding:6px;border-radius:8px;margin-top:6px">
+            <div style="width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;">
+              <img src='${m.avatarImg}' class='avatar' style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div>
+              <div style="font-weight:600;color:${color}">${m.name}</div>
+              <div style="font-size:12px;color:var(--muted)">${m.role||""}</div>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+  `;
+  return card;
+}
+
+function toggleServer(e) {
+  const btn = e.currentTarget;
+  const key = btn.dataset.server;
+  const existing = document.getElementById(key + 'Card');
+  const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+  if (isExpanded) {
+    if (existing) existing.remove();
+    btn.setAttribute('aria-expanded', 'false');
+    return;
+  }
+
+  document.querySelectorAll('.server').forEach(s => s.setAttribute('aria-expanded', 'false'));
+  expandArea.innerHTML = '';
+
+  const card = createExpandCard(key);
+  if (card) {
+    expandArea.appendChild(card);
+    btn.setAttribute('aria-expanded', 'true');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+serverButtons.forEach(b => {
+  b.addEventListener('click', toggleServer);
+  b.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      ev.preventDefault();
+      toggleServer({ currentTarget: b });
     }
-
-    function toggleServer(e){
-      const btn = e.currentTarget;
-      const key = btn.dataset.server;
-      const existing = document.getElementById(key + 'Card');
-      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-      // Close if open
-      if(isExpanded){
-        if(existing) existing.remove();
-        btn.setAttribute('aria-expanded','false');
-        return;
-      }
-
-      // Otherwise close other open cards and open this one
-      document.querySelectorAll('.server').forEach(s=>s.setAttribute('aria-expanded','false'));
-      expandArea.innerHTML = ''; // single open card behaviour; remove if you want multiples
-
-      const card = createExpandCard(key);
-      if(card){
-        expandArea.appendChild(card);
-        btn.setAttribute('aria-expanded','true');
-        card.scrollIntoView({behavior:'smooth', block:'nearest'});
-      }
-    }
-
-    serverButtons.forEach(b => { b.addEventListener('click', toggleServer); b.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggleServer({currentTarget:b}); } }); });
+  });
+});
 
   </script>
 </body>

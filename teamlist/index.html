@@ -21,7 +21,10 @@
     body{
       margin:0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:var(--bg);
+      background-image: url("https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/674584097f8482257f855b1c_BG-2025.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100%;
       color: #fff;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -70,8 +73,8 @@
       flex-wrap:wrap;
     }
 .icon {
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;  /* nur nötig, falls das Icon-Element ein Container ist */
   object-fit: cover;  /* bei <img>, um das Bild korrekt zu skalieren */
@@ -82,6 +85,7 @@
       width:128px;
       height:128px;
      border-radius: 14px;
+      box-shadow:1 10px 30px rgba(0,0,0,1);
  /* rounded square like Apple */
       background:/*linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01))*/transparent;
       display:flex;
@@ -93,7 +97,7 @@
       border:none;
       overflow:hidden;
     }
-    .server img{width:95%; height:90%; object-fit:cover; border-radius:10px}
+    .server img{width:100%; height:93%; object-fit:cover; border-radius:10px}
 
     /* Hover name tooltip above the icon */
     .server .tooltip{
@@ -157,11 +161,11 @@
     /* Responsive tweaks */
     @media (max-width:900px){
       .team-lists{grid-template-columns:1fr}
-      .server{width:56px;height:56px}
+      .server{width:60px;height:56px}
     }
     @media (max-width:520px){
       body{padding:18px}
-      .server{width:48px;height:48px}
+      .server{width:53px;height:48px}
       .wrap{gap:12px}
     }
 
@@ -185,6 +189,7 @@
   </style>
 </head>
 <body>
+  
   <div class="wrap">
 
     <!-- Discords Card -->

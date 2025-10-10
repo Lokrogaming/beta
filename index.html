@@ -1,9 +1,9 @@
 <html lang="de">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beta</title>
-  
+
     <style>
       :root {
         --bg: #0b0b0b;
@@ -18,17 +18,10 @@
         --card: rgba(255, 255, 255, 0.06);
         --blur: 10px;
         --radius: 14px;
-        --radius-lg: 18px;
         --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        --maxw: 1100px;
-        --header-h: 64px;
-        --focus: 0 0 0 4px rgba(247, 209, 23, 0.18);
-        --focus-b: 1px solid rgba(247, 209, 23, 0.55);
         color-scheme: dark;
-        --pillBtnBGColor: #ddd;
-        --text-color: #0000;
       }
-      /* Hintergrund */
+
       body {
         margin: 0;
         font-family: 'Segoe UI', Arial, sans-serif;
@@ -42,7 +35,6 @@
         overflow-x: hidden;
       }
 
-      /* Grid Overlay */
       .background.bg-grid1 {
         position: fixed;
         top: 0;
@@ -55,7 +47,6 @@
         z-index: 0;
       }
 
-      /* Content Box */
       .content.box {
         position: relative;
         z-index: 1;
@@ -83,53 +74,91 @@
         transition: color 0.2s ease;
       }
 
-      a:hover {
-        color: #0ea5e9;
-      }
+      a:hover { color: #0ea5e9; }
 
-      /* Elfsight Styling */
-      .elfsight-app-14fdf69d-7050-47f6-aeef-514353a13c06 {
-        position: relative;
-        z-index: 1;
-        margin-top: 30px;
-        width: 100%;
-        max-width: 600px;
-      }
-
-      /* Animation */
       @keyframes fadeIn {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
       }
-        .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  text-decoration: none;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
 
-.btn-primary {
-  background: var(--brand);
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(114,137,218,.45);
-}
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
 
-.btn-primary:hover { filter: brightness(.95); }
-.btn-primary:focus-visible { outline: none; box-shadow: var(--focus); }
+      .btn-primary {
+        background: var(--brand);
+        color: #fff;
+        box-shadow: 0 6px 18px rgba(114,137,218,.45);
+      }
 
-/* Pill-Variante */
-.btn-pill {
-  border-radius: 999px; /* pill-form */
-  padding: 10px 28px;   /* etwas mehr Seitenabstand */
-}
+      .btn-primary:hover { filter: brightness(.95); }
+      .btn-primary:focus-visible { outline: none; box-shadow: var(--focus); }
 
+      .btn-pill {
+        border-radius: 999px;
+        padding: 10px 28px;
+      }
+
+      /* Rang-Infobox */
+      .ranks-box {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 25px;
+        margin-top: 35px;
+        text-align: left;
+        box-shadow: var(--shadow);
+        animation: fadeIn 1.2s ease-out;
+      }
+
+      .ranks-box h2 {
+        text-align: center;
+        color: var(--accent);
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+      }
+
+      .rank {
+        display: flex;
+        flex-direction: column;
+        background: rgba(255,255,255,0.04);
+        border-radius: 10px;
+        padding: 12px 15px;
+        margin-bottom: 14px;
+        border-left: 5px solid transparent;
+        transition: transform 0.2s ease, border-color 0.3s ease;
+      }
+
+      .rank:hover {
+        transform: translateX(5px);
+      }
+
+      .rank span {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .rank small {
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .rank.basic { border-color: #5865f2; }
+      .rank.hunter { border-color: #00b894; }
+      .rank.master { border-color: #f7d117; }
+      .rank.supporter { border-color: #ff7f50; }
+      .rank.analyst { border-color: #1abc9c; }
+      .rank.architect { border-color: #9b59b6; }
     </style>
   </head>
   <body>
@@ -144,11 +173,47 @@
       </h1>
       <button onclick="window.location.href='home.html'" class="btn btn-primary btn-pill">Testen</button>
 
-       </div>
+      <div class="ranks-box">
+        <h2>🏆 Verfügbare Ränge im Betaprogramm</h2>
 
-    <!-- Elfsight Contact Form -->
+        <div class="rank basic">
+          <span>🔹 Beta Tester (+Discordrang!)</span>
+          <small>Sei ein aktiver Teilnehmer des Betaprogramms. Melde 2–3 Bugs.</small>
+        </div>
+
+        <div class="rank hunter">
+          <span>🐛 Bug Hunter (+Discordrang!)</span>
+          <small>Sei bekannt durch deinen Ehrgeiz, diese miesen Fehler zu finden! Melde 10–20 Bugs.</small>
+        </div>
+        <div class="rank supporter">
+          <span>🧩 Idea Supporter</span>
+          <small>Gib mindestens 5 konstruktive Feedbacks zu laufenden Projekten. Du hilfst, Ideen zu verbessern, bevor sie Fehler haben.</small>
+        </div>
+
+        <div class="rank analyst">
+          <span>⚙️ System Analyst</span>
+          <small>Melde mindestens 25 Bugs oder gib 10+ ausführliche Feedbacks. Du erkennst Muster und Systemprobleme frühzeitig.</small>
+        </div>
+
+        <div class="rank architect">
+          <span>🛠️ Beta Architect</span>
+          <small>Melde 40+ Bugs und gib mindestens 15 Feedbacks. Du bist das Fundament des Betaprogramms – ohne dich läuft nichts!</small>
+        </div>
+
+        <div class="rank master">
+          <span>👑 Bug Master (+Discordrang!)</span>
+          <small>Werde vom Projektteam zum König der Bugs nominiert. Nur wer alle vorherigen Ränge besitzt und die meisten Bugs gemeldet hat, erreicht diesen Rang.</small>
+        </div>
+
+        
+        <p style="margin-top:18px; text-align:center; color:var(--muted); font-size:0.95rem;">
+          Tipp: Wenn du gerade keine Bugs findest, kannst du uns jederzeit <br>
+          neue Ideen im Vorschläge-Kanal schicken!
+        </p>
+      </div>
+    </div>
+
     <script src="https://elfsightcdn.com/platform.js" async></script>
     <div class="elfsight-app-14fdf69d-7050-47f6-aeef-514353a13c06" data-elfsight-app-lazy></div>
-    
   </body>
 </html>

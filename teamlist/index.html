@@ -49,6 +49,7 @@
       border-radius: calc(var(--card-radius));
       padding:20px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      transition:opacity 180ms ease, transform ease;
     }
 
     .group-header{
@@ -169,6 +170,17 @@
 
     /* small accessible focus outline */
     .server:focus{outline:3px solid rgba(122,225,255,0.12); outline-offset:3px}
+.expand-container {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 2s ease;
+}
+
+.expand-container.active {
+  max-height: 1000px; /* ausreichend groß wählen */
+  opacity: 1;
+}
 
   </style>
 </head>
@@ -204,6 +216,12 @@
           <img src="https://cdn.discordapp.com/icons/1421201523643252839/bc914fe6ead2501f36c0e19a7d2a8d3a.png?size=128&quality=lossless" alt="LokroGames Server Icon">
           <span class="tooltip">Lokrogames</span>
         </button>
+
+
+        <button class="server" data-server="portfoleez" aria-expanded="false" aria-controls="gammaCard">
+          <img src="https://cdn.discordapp.com/icons/1398373615996506212/4ca015983c0c20402992910f3168083f.png?size=128&quality=lossless" alt="Portfoleez Server Icon">
+          <span class="tooltip">Portfoleez</span>
+        </button>
       </div>
 
       <!-- Expand area: dynamisch gefüllte 'glass' cards -->
@@ -211,62 +229,11 @@
 
     </section>
 
-    <!-- Communities Card -->
-    <section style="display:none;" class="group-card" aria-labelledby="communitiesTitle">
-      <div class="group-header">
-        <div>
-          <div id="communitiesTitle" class="group-title">Community- & Teamverzeichnis</div>
-          <div class="subtle">Oben: Rollennamen — Unten: Mitglieder (mit Rollen)</div>
-        </div>
-        <div class="subtle">Responsive & Glass-Design</div>
-      </div>
-
-      <div class="team-lists">
-        <!-- Rollen-Liste (oben) -->
-        <div class="list" aria-labelledby="rolesTitle">
-          <div id="rolesTitle" class="role">Rollen</div>
-          <div class="small-list subtle" style="margin-top:8px">
-            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent)"></div><div style="margin-left:8px">Admin</div></div>
-            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:#9b8cff"></div><div style="margin-left:8px">Moderator</div></div>
-            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:#ffb86b"></div><div style="margin-left:8px">Support</div></div>
-            <div class="member"><div style="width:10px;height:10px;border-radius:2px;background:#7ef0a4"></div><div style="margin-left:8px">Member</div></div>
-          </div>
-        </div>
-
-        <!-- Member-Liste (unten) -->
-        <div class="list" aria-labelledby="membersTitle">
-          <div id="membersTitle" class="role">Mitglieder</div>
-
-          <div class="member">
-            <div class="avatar">MJ</div>
-            <div class="meta"><div class="name">Maja Jansen</div><div class="small">Admin • Online</div></div>
-          </div>
-
-          <div class="member">
-            <div class="avatar">TK</div>
-            <div class="meta"><div class="name">Timo Krüger</div><div class="small">Moderator • Letzte Aktivität: 2h</div></div>
-          </div>
-
-          <div class="member">
-            <div class="avatar">AL</div>
-            <div class="meta"><div class="name">Alex L.</div><div class="small">Support • Online</div></div>
-          </div>
-
-          <div class="member">
-            <div class="avatar">SN</div>
-            <div class="meta"><div class="name">Sarah N.</div><div class="small">Member • Offline</div></div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="hint">Tipp: Icons durch eigene Bilder ersetzen. Größe: ideal 512×512, quadratisch.</div>
-    </section>
-
-  </div>
+    
+        
 
   <script>
-    /* Beispiel: Datenstruktur für Server-Details. In realem Projekt durch API/JSON ersetzen. */
+   
     const serverData = {
       lolde:{
         img:'https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=512',
@@ -298,6 +265,20 @@
         {roleColor:7,name:"N03LK1LL3R5",role:"Ultra Lifetime",avatarImg:"https://cdn.discordapp.com/avatars/1021748213679665162/0173ec5dbb16900f0bcc82466411fc50.webp?size=80"}
       ]
       },
+      portfoleez:{
+       title:'Portfoleez',
+        desc:'Der offizielle Supportserver von Portfoleez [Powered by LokroGaming]',
+        img:{src:"https://cdn.discordapp.com/icons/1398373615996506212/4ca015983c0c20402992910f3168083f.png?size=128&quality=lossless", alt:"Portfoleez Logo"},
+        specials:[
+        {roleColor:9,name:'Lokrogamer',role:'Founder | Erfinder', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'}
+        
+      ],
+        members:[
+        
+        {name:"flobg19",avatarImg:"https://cdn.discordapp.com/avatars/461529181558276097/c84b7b0f9b86cc792916c8882b18dea7.webp?size=128"},
+        {name:"Vronleng",avatarImg:"https://cdn.discordapp.com/avatars/1422170902161920171/d0e25fdf0043adb80b86f4eb52cb95d8.webp?size=32"}
+      ]
+      },
       lokrogames:{
         title:'LokroGames',
         desc:'Alles rund ums zocken und die Gamentwicklung',
@@ -324,7 +305,8 @@ function getRoleColor(roleColor) {
     5: "#e91e63", //ADMIN
     6: "#11806a", //MODERATOR
     7: "#206694", //ULTRA-LIFETIME
-    8: "#99aab5" //GREY
+    8: "#99aab5", //GREY
+    9: "#e67e22" //GOLDBROWN
   };
 
   if (typeof roleColor === "number") {
@@ -396,7 +378,8 @@ function toggleServer(e) {
   const isExpanded = btn.getAttribute('aria-expanded') === 'true';
 
   if (isExpanded) {
-    if (existing) existing.remove();
+    expandArea.classList.remove('active');
+    expandArea.innerHTML = '';
     btn.setAttribute('aria-expanded', 'false');
     return;
   }
@@ -407,8 +390,8 @@ function toggleServer(e) {
   const card = createExpandCard(key);
   if (card) {
     expandArea.appendChild(card);
+    expandArea.classList.add('active');
     btn.setAttribute('aria-expanded', 'true');
-    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 

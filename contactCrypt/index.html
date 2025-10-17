@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kontakt-basierte Verschlüsselung — Demo</title>
+<style>
+  body { font-family: system-ui, Arial, sans-serif; padding: 18px; max-width: 900px; margin: auto; }
+  label { display:block; margin-top: 12px; font-weight:600; }
+  textarea, input, button { width:100%; padding:8px; box-sizing:border-box; margin-top:6px; }
+  .row { display:flex; gap:12px; }
+  .col { flex:1; }
+  pre { background:#f5f5f7; padding:10px; overflow:auto }
+  small { color:#666 }
+</style>
+</head>
+<body>
+<h2>Kontakt-basierte Verschlüsselung — Demo</h2>
+<p>Flow: Erzeuge Keypair → Teile Public-Payload (QR/Text) → Empfänger importiert Payload → beidseitig ECDH→HKDF → AES-GCM</p>
+
+<button id="genKeys">1) Keypair erzeugen</button>
+<small id="keyInfo">Noch keine Keys</small>
+
+<label>2) Deine Share-Payload (public) — gib das an deine Kontaktperson (z.B. QR oder Copy)</label>
+<textarea id="sharePayload" rows="5" placeholder="Gilt als QR-Inhalt / Text zum Teilen" readonly></textarea>
+
+<label>3) Paste die Share-Payload der Gegenpartei hier (deren public keys)</label>
+<textarea id="otherPayload" rows="5" placeholder='{"userId":"alice","pubX":"...","fingerprint":"..."}'></textarea>
+<button id="importOther">4) Payload importieren & ableiten</button>
+<small id="derivedInfo"></small>
+
+<hr>
+<div class="row">
+  <div class="col">
+    <label>Nachricht verschlüsseln (mit abgeleitetem Session-Key)</label>
+    <textarea id="plain" rows="4">Hallo, dies ist ein Test.</textarea>
+    <button id="encrypt">Verschlüsseln</button>
+    <label>Ciphertext (Base64)</label>
+    <textarea id="cipher" rows="4" readonly></textarea>
+  </div>
+
+  <div class="col">
+    <label>Gib Ciphertext (oder kopiere aus links) zum Entschlüsseln</label>
+    <textarea id="cipherForDec" rows="4"></textarea>
+    <button id="decrypt">Entschlüsseln</button>
+    <label>Entschlüsselte Nachricht</label>
+    <textarea id="decrypted" rows="4" readonly></textarea>
+  </div>
+</div>
+
+<hr>
+<pre id="log"></pre>
+
+<script>
+/*
+  WICHTIG:
+  - Dieses Demo verwendet ECDH P-256 als Fallback (gut unterstützt).
+  - Für bessere Krypto nutze X25519/Ed25519, falls Browser Unterstützung bietet.
+  - Kein privater/symmetrischer Key wird in der Share-Payload verschickt.
+*/
+
+const logEl = document.getElementById('log');
+const keyInfo = document.getElementById('keyInfo');
+const sharePayloadEl = document.getElementById('sharePayload');
+const otherPayloadEl = document.getElementById('otherPayload');
+const derivedInfo = document.getElementById('derivedInfo');
+
+let myKeys = null;        // { ecdhKeyPair, signKeyPair(optional), fingerprint }
+let derivedAesKey = null; // CryptoKey AES-GCM
+
+function log(...t){ logEl.textContent += t.join(' ') + '\n'; logEl.scrollTop = logEl.scrollHeight; }
+
+// helper: buffer <-> base64
+function bufToB64(b){ return btoa(String.fromCharCode(...new Uint8Array(b))); }
+function b64ToBuf(s){ return Uint8Array.from(atob(s), c=>c.charCodeAt(0)); }
+function utf8ToBuf(s){ return new TextEncoder().encode(s); }
+function bufToUtf8(buf){ return new TextDecoder().decode(buf); }
+
+// fingerprint: hash of public key bytes
+async function fingerprintOf(pubJwk){
+  // simple fingerprint: SHA-256 of JSON canonicalized public JWK
+  const json = JSON.stringify(pubJwk);
+  const hash = await crypto.subtle.digest('SHA-256', utf8ToBuf(json));
+  // use first 8 bytes hex as short fingerprint
+  return Array.from(new Uint8Array(hash).slice(0,8)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function generateKeypairs(){
+  // ECDH keypair (P-256) for wide browser support. Replace namedCurve => "X25519" if available.
+  const ecdhKeyPair = await crypto.subtle.generateKey(
+    { name: "ECDH", namedCurve: "P-256" },
+    true,
+    ["deriveKey","deriveBits"]
+  );
+  // optional: sign key (Ed25519) could be generated if browser supports it
+  myKeys = { ecdhKeyPair };
+  // export public JWK for sharing
+  const pub = await crypto.subtle.exportKey('jwk', ecdhKeyPair.publicKey);
+  const fp = await fingerprintOf(pub);
+  myKeys.fingerprint = fp;
+  myKeys.userId = 'user-' + Math.random().toString(36).slice(2,8);
+
+  keyInfo.textContent = `Keys erzeugt — userId: ${myKeys.userId}, fingerprint: ${myKeys.fingerprint}`;
+  const payload = { userId: myKeys.userId, pubEcdhJwk: pub, fingerprint: fp };
+  sharePayloadEl.value = JSON.stringify(payload, null, 2);
+  log('Keypair erzeugt. Public payload ready (kann als QR geteilt werden).');
+}
+
+async function importOtherPayloadAndDerive(){
+  const txt = otherPayloadEl.value.trim();
+  if(!txt){ alert('Bitte die Share-Payload der Gegenpartei einfügen.'); return; }
+  let parsed;
+  try{ parsed = JSON.parse(txt); } catch(e){ alert('Ungültiges JSON'); return; }
+
+  // import other's public key
+  const theirJwk = parsed.pubEcdhJwk;
+  if(!theirJwk){ alert('pubEcdhJwk fehlt'); return; }
+
+  const theirPub = await crypto.subtle.importKey('jwk', theirJwk, { name:'ECDH', namedCurve:'P-256' }, true, []);
+  // derive shared secret
+  const sharedKey = await crypto.subtle.deriveBits(
+    { name:'ECDH', public: theirPub },
+    myKeys.ecdhKeyPair.privateKey,
+    256
+  );
+  log('ECDH bits derived (hex snippet):', bufToB64(sharedKey).slice(0,20) + '...');
+  // HKDF to derive AES-GCM-256 key
+  // Use a salt (random) and info context (e.g., both userIds)
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const info = utf8ToBuf('chat-session:' + myKeys.userId + ':' + (parsed.userId||'remote'));
+  // import shared bits as raw key for HKDF
+  const baseKey = await crypto.subtle.importKey('raw', sharedKey, { name:'HKDF' }, false, ['deriveKey']);
+  derivedAesKey = await crypto.subtle.deriveKey(
+    { name:'HKDF', hash:'SHA-256', salt: salt, info: info },
+    baseKey,
+    { name:'AES-GCM', length: 256 },
+    false,
+    ['encrypt','decrypt']
+  );
+  derivedInfo.textContent = `Session-Key abgeleitet (salt b64: ${bufToB64(salt)})`;
+  log('Session AES-GCM Key abgeleitet. Du kannst jetzt verschlüsseln/entschlüsseln.');
+}
+
+// AES-GCM encrypt helper — outputs base64 with iv prefix
+async function aesGcmEncrypt(key, plaintext){
+  const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV
+  const ct = await crypto.subtle.encrypt({ name:'AES-GCM', iv }, key, utf8ToBuf(plaintext));
+  // prefix iv + ciphertext
+  const joined = new Uint8Array(iv.byteLength + ct.byteLength);
+  joined.set(iv, 0);
+  joined.set(new Uint8Array(ct), iv.byteLength);
+  return bufToB64(joined.buffer);
+}
+
+async function aesGcmDecrypt(key, b64msg){
+  const data = b64ToBuf(b64msg);
+  if(data.byteLength < 13) throw new Error('Ungültige Nachricht');
+  const iv = data.slice(0,12);
+  const ct = data.slice(12);
+  const dec = await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, ct);
+  return bufToUtf8(dec);
+}
+
+// UI events
+document.getElementById('genKeys').addEventListener('click', ()=> generateKeypairs().catch(e=>{log('ERR',e);alert(e)}));
+document.getElementById('importOther').addEventListener('click', ()=> importOtherPayloadAndDerive().catch(e=>{log('ERR',e);alert(e)}));
+document.getElementById('encrypt').addEventListener('click', async ()=>{
+  if(!derivedAesKey){ alert('Bitte zuerst Payload importieren und Key ableiten'); return; }
+  const plain = document.getElementById('plain').value;
+  try{
+    const cipher = await aesGcmEncrypt(derivedAesKey, plain);
+    document.getElementById('cipher').value = cipher;
+    document.getElementById('cipherForDec').value = cipher;
+    log('Verschlüsselt, Cipher (b64) erzeugt.');
+  }catch(e){ log('Encrypt ERR', e); alert(e) }
+});
+document.getElementById('decrypt').addEventListener('click', async ()=>{
+  if(!derivedAesKey){ alert('Bitte zuerst Payload importieren und Key ableiten'); return; }
+  const c = document.getElementById('cipherForDec').value.trim();
+  if(!c){ alert('Kein Ciphertext'); return; }
+  try{
+    const dec = await aesGcmDecrypt(derivedAesKey, c);
+    document.getElementById('decrypted').value = dec;
+    log('Erfolgreich entschlüsselt.');
+  }catch(e){ log('Decrypt ERR', e); alert('Entschlüsselung fehlgeschlagen: ' + e) }
+});
+
+</script>
+</body>
+</html>

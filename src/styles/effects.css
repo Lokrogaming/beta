@@ -1,0 +1,373 @@
+/*TEXT EFFECTS*/  
+.glow-white {
+  color: white;
+  text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
+}
+
+.glow-blue {
+  color: #00f;
+  text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #00f;
+}
+
+.glow-red {
+  color: #f00;
+  text-shadow: 0 0 5px #f00, 0 0 10px #f00, 0 0 20px #f00;
+}
+
+.glow-green {
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
+}
+
+/* DIMMED EFFECTS */
+.glow-white-dim {
+  color: white;
+  text-shadow: 0 0 2px white, 0 0 5px rgba(255,255,255,0.5);
+}
+
+.glow-blue-dim {
+  color: #99f;
+  text-shadow: 0 0 2px #66f, 0 0 4px rgba(0,0,255,0.4);
+}
+
+.glow-red-dim {
+  color: #f99;
+  text-shadow: 0 0 2px #f66, 0 0 4px rgba(255,0,0,0.4);
+}
+
+.glow-green-dim {
+  color: #9f9;
+  text-shadow: 0 0 2px #6f6, 0 0 4px rgba(0,255,0,0.4);
+}
+/* ANIMATED EFFECTS */
+.glow-rainbow {
+  color: white;
+  font-weight: bold;
+  animation: rainbowGlow 2.5s linear infinite;
+}
+
+@keyframes rainbowGlow {
+  0%   { text-shadow: 0 0 10px red, 0 0 20px red; }
+  20%  { text-shadow: 0 0 10px orange, 0 0 20px orange; }
+  40%  { text-shadow: 0 0 10px yellow, 0 0 20px yellow; }
+  60%  { text-shadow: 0 0 10px green, 0 0 20px green; }
+  80%  { text-shadow: 0 0 10px blue, 0 0 20px blue; }
+  100% { text-shadow: 0 0 10px violet, 0 0 20px violet; }
+}
+
+/* DIMMED ANIMATED EFFECTS*/
+.glow-rainbow-dim {
+  color: white;
+  animation: rainbowGlowDim 2.5s linear infinite;
+}
+
+@keyframes rainbowGlowDim {
+  0%   { text-shadow: 0 0 3px red; }
+  20%  { text-shadow: 0 0 3px orange; }
+  40%  { text-shadow: 0 0 3px yellow; }
+  60%  { text-shadow: 0 0 3px green; }
+  80%  { text-shadow: 0 0 3px blue; }
+  100% { text-shadow: 0 0 3px violet; }
+}
+/* ────────────── BUTTON GLOWS ────────────── */
+
+/* Weiß */
+.btn-glow-white {
+  background: black;
+  color: white;
+  border: 1px solid white;
+  text-shadow: 0 0 5px white, 0 0 10px white;
+  box-shadow: 0 0 10px white;
+}
+
+.btn-glow-white-dim {
+  background: black;
+  color: white;
+  border: 1px solid #ccc;
+  text-shadow: 0 0 2px white;
+  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+}
+
+/* Blau */
+.btn-glow-blue {
+  background: black;
+  color: #00f;
+  border: 1px solid #00f;
+  text-shadow: 0 0 5px #00f, 0 0 10px #00f;
+  box-shadow: 0 0 10px #00f;
+}
+
+.btn-glow-blue-dim {
+  background: black;
+  color: #99f;
+  border: 1px solid #99f;
+  text-shadow: 0 0 2px #66f;
+  box-shadow: 0 0 4px rgba(0,0,255,0.4);
+}
+
+/* Rot */
+.btn-glow-red {
+  background: black;
+  color: #f00;
+  border: 1px solid #f00;
+  text-shadow: 0 0 5px #f00, 0 0 10px #f00;
+  box-shadow: 0 0 10px #f00;
+}
+
+.btn-glow-red-dim {
+  background: black;
+  color: #f99;
+  border: 1px solid #f99;
+  text-shadow: 0 0 2px #f66;
+  box-shadow: 0 0 4px rgba(255,0,0,0.4);
+}
+
+/* Grün */
+.btn-glow-green {
+  background: black;
+  color: #0f0;
+  border: 1px solid #0f0;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+  box-shadow: 0 0 10px #0f0;
+}
+
+.btn-glow-green-dim {
+  background: black;
+  color: #9f9;
+  border: 1px solid #9f9;
+  text-shadow: 0 0 2px #6f6;
+  box-shadow: 0 0 4px rgba(0,255,0,0.4);
+}
+
+/* Rainbow */
+.btn-glow-rainbow {
+  background: black;
+  color: white;
+  font-weight: bold;
+  border: 1px solid white;
+  animation: glowBtnRainbow 2.5s linear infinite;
+}
+
+@keyframes glowBtnRainbow {
+  0%   { box-shadow: 0 0 10px red; }
+  20%  { box-shadow: 0 0 10px orange; }
+  40%  { box-shadow: 0 0 10px yellow; }
+  60%  { box-shadow: 0 0 10px green; }
+  80%  { box-shadow: 0 0 10px blue; }
+  100% { box-shadow: 0 0 10px violet; }
+}
+
+/* ────────────── LINK GLOWS ────────────── */
+
+.link-glow-white {
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 0 5px white, 0 0 10px white;
+}
+
+.link-glow-white-dim {
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 0 2px white;
+}
+
+.link-glow-blue {
+  color: #00f;
+  text-decoration: none;
+  text-shadow: 0 0 5px #00f, 0 0 10px #00f;
+}
+
+.link-glow-blue-dim {
+  color: #99f;
+  text-decoration: none;
+  text-shadow: 0 0 2px #66f;
+}
+
+.link-glow-red {
+  color: #f00;
+  text-decoration: none;
+  text-shadow: 0 0 5px #f00, 0 0 10px #f00;
+}
+
+.link-glow-red-dim {
+  color: #f99;
+  text-decoration: none;
+  text-shadow: 0 0 2px #f66;
+}
+
+.link-glow-green {
+  color: #0f0;
+  text-decoration: none;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+}
+
+.link-glow-green-dim {
+  color: #9f9;
+  text-decoration: none;
+  text-shadow: 0 0 2px #6f6;
+}
+
+.link-glow-rainbow {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  animation: glowLinkRainbow 2.5s linear infinite;
+}
+
+@keyframes glowLinkRainbow {
+  0%   { text-shadow: 0 0 5px red; }
+  20%  { text-shadow: 0 0 5px orange; }
+  40%  { text-shadow: 0 0 5px yellow; }
+  60%  { text-shadow: 0 0 5px green; }
+  80%  { text-shadow: 0 0 5px blue; }
+  100% { text-shadow: 0 0 5px violet; }
+}
+
+/* ────────────── BOX GLOWS ────────────── */
+
+.box-glow-white {
+  background: black;
+  color: white;
+  box-shadow: 0 0 10px white;
+  border-radius: 15px;
+}
+
+.box-glow-white-dim {
+  background: black;
+  color: white;
+  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+  border-radius: 15px;
+}
+
+.box-glow-blue {
+  background: black;
+  color: #00f;
+  box-shadow: 0 0 10px #00f;
+  border-radius: 15px;
+}
+
+.box-glow-blue-dim {
+  background: black;
+  color: #99f;
+  box-shadow: 0 0 4px rgba(0,0,255,0.4);
+  border-radius: 15px;
+}
+
+.box-glow-red {
+  background: black;
+  color: #f00;
+  box-shadow: 0 0 10px #f00;
+  border-radius: 15px;
+}
+
+.box-glow-red-dim {
+  background: black;
+  color: #f99;
+  box-shadow: 0 0 4px rgba(255,0,0,0.4);
+  border-radius: 15px;
+}
+
+.box-glow-green {
+  background: black;
+  color: #0f0;
+  box-shadow: 0 0 10px #0f0;
+  border-radius: 15px;
+}
+
+.box-glow-green-dim {
+  background: black;
+  color: #9f9;
+  box-shadow: 0 0 4px rgba(0,255,0,0.4);
+  border-radius: 15px;
+}
+
+.box-glow-rainbow {
+  background: black;
+  color: white;
+  animation: glowBoxRainbow 2.5s linear infinite;
+  border-radius: 15px;
+}
+
+@keyframes glowBoxRainbow {
+  0%   { box-shadow: 0 0 10px red; }
+  20%  { box-shadow: 0 0 10px orange; }
+  40%  { box-shadow: 0 0 10px yellow; }
+  60%  { box-shadow: 0 0 10px green; }
+  80%  { box-shadow: 0 0 10px blue; }
+  100% { box-shadow: 0 0 10px violet; }
+}
+
+/* ────────────── INPUT GLOWS ────────────── */
+
+.input-glow-white {
+  background: black;
+  color: white;
+  border: 1px solid white;
+  box-shadow: 0 0 10px white;
+}
+
+.input-glow-white-dim {
+  background: black;
+  color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+}
+
+.input-glow-blue {
+  background: black;
+  color: #00f;
+  border: 1px solid #00f;
+  box-shadow: 0 0 10px #00f;
+}
+
+.input-glow-blue-dim {
+  background: black;
+  color: #99f;
+  border: 1px solid #99f;
+  box-shadow: 0 0 4px rgba(0,0,255,0.4);
+}
+
+.input-glow-red {
+  background: black;
+  color: #f00;
+  border: 1px solid #f00;
+  box-shadow: 0 0 10px #f00;
+}
+
+.input-glow-red-dim {
+  background: black;
+  color: #f99;
+  border: 1px solid #f99;
+  box-shadow: 0 0 4px rgba(255,0,0,0.4);
+}
+
+.input-glow-green {
+  background: black;
+  color: #0f0;
+  border: 1px solid #0f0;
+  box-shadow: 0 0 10px #0f0;
+}
+
+.input-glow-green-dim {
+  background: black;
+  color: #9f9;
+  border: 1px solid #9f9;
+  box-shadow: 0 0 4px rgba(0,255,0,0.4);
+}
+
+.input-glow-rainbow {
+  background: black;
+  color: white;
+  border: 1px solid white;
+  animation: glowInputRainbow 2.5s linear infinite;
+}
+
+@keyframes glowInputRainbow {
+  0%   { box-shadow: 0 0 10px red; }
+  20%  { box-shadow: 0 0 10px orange; }
+  40%  { box-shadow: 0 0 10px yellow; }
+  60%  { box-shadow: 0 0 10px green; }
+  80%  { box-shadow: 0 0 10px blue; }
+  100% { box-shadow: 0 0 10px violet; }
+}
+

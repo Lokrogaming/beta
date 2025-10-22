@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Teamverzeichnis — Discord & Communities</title>
+  <link rel="icon" href="https://lokrogaming.github.io/src/assets/icon.png">
   <style>
     :root{
       --bg:#0b0b0b;
@@ -126,6 +127,20 @@
     }
     .server:hover{transform:translateY(-8px); box-shadow:0 10px 30px rgba(0,0,0,0.6)}
     .server:hover .tooltip{opacity:1; transform:translateX(-50%) translateY(0)}
+    .server.active {
+  animation: float 1s ease-in-out infinite alternate;
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes float {
+  from {
+    transform: translateY(-8px);
+  }
+  to {
+    transform: translateY(-14px);
+  }
+}
 
     /* Expanded glass cards that pop up when clicking a server */
     .expand-container{
@@ -181,17 +196,19 @@
     .hint{font-size:13px;color:var(--muted); margin-top:10px}
 
     /* small accessible focus outline */
-    .server:focus{outline:3px solid rgba(122,225,255,0.12); outline-offset:3px}
+    .server:focus{outline:3px solid rgba(122,225,255,0.12); outline-offset:3px;transform:translateY(-10px);}
 .expand-container {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height 0.4s ease, opacity 2s ease;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  
 }
 
 .expand-container.active {
-  max-height: 1000px; /* ausreichend groß wählen */
+  max-height: 1000px; /* ausreichend groß */
   opacity: 1;
+  
 }
 .footer {
       position:fixed;
@@ -282,6 +299,7 @@ button, a, body, div, section {
   align-self:center;
   font-weight: bolder;
 }
+
 .disabled {
   display:none;
 }
@@ -418,7 +436,7 @@ counters.forEach(counter => {
         img:{src:"https://cdn.discordapp.com/icons/1416051067468382218/3fd502446c4f0be83fe7a30530d8148e.png?size=128&quality=lossless", alt:"lolde Logo"},
         specials:[
         {roleColor:8,name:'Lokrogamer',role:'👑・Inhaber', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=512'},
-        {roleColor:8,name:'Eministar',role:'👑・Inhaber',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=1024"}
+        {roleColor:8,name:'Eministar',role:'👑・Inhaber',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/28e16196f962c838e77402853f8aa149.webp?size=128"}
         
       ],
         members:[
@@ -433,7 +451,7 @@ counters.forEach(counter => {
         specials:[
         {roleColor:1,name:'Lokrogamer',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922?size=128'},
         {roleColor:2,name:'Reu Clopps',role:'Co-Owner',avatarImg:"https://cdn.discordapp.com/avatars/1255805143132409909/b256327475927e51bd77c39899c623f0.webp?size=128"},
-        {roleColor:3,name:'Eministar',role:'Head-Developer',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=128"},
+        {roleColor:3,name:'Eministar',role:'Head-Developer',avatarImg:"https://cdn.discordapp.com/avatars/928021462386892830/28e16196f962c838e77402853f8aa149.webp?size=128"},
         {roleColor:5,name:"Chris Vhailor", role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/154589532384264192/c391f9001bce1b49491318b5fd377b27.webp?size=128"},
         {roleColor:5,name:"Zar",role:"Administrator",avatarImg:"https://cdn.discordapp.com/avatars/334742694255656970/85245a5169cae5106ac5063d7a202793.webp?size=128"}
       ],
@@ -470,7 +488,7 @@ counters.forEach(counter => {
         img:{src:"https://cdn.discordapp.com/avatars/1348103763201888407/c6603351a9dcc6f88fc8d0087025592f.webp?size=512", alt:"Stardev Logo"},
         specials:[
         {roleColor:"#71368a",name:'EminiBot',role:'Stardev, Bot', avatarImg:'https://cdn.discordapp.com/avatars/1348103763201888407/c6603351a9dcc6f88fc8d0087025592f.webp?size=128'},
-        {roleColor:"#71368a",name:'Eministar',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/928021462386892830/d812a2bbf21d60e5109c7182bc190d15.webp?size=128'},
+        {roleColor:"#71368a",name:'Eministar',role:'Owner', avatarImg:'https://cdn.discordapp.com/avatars/928021462386892830/28e16196f962c838e77402853f8aa149.webp?size=128'},
         {roleColor:"#71368a",name:'Mio',role:'Co-Owner', avatarImg:'9855d7e3b9780976.png'},
         {roleColor:"#71368a",name:'Lokrogamer',role:'Co-Owner', avatarImg:'https://cdn.discordapp.com/avatars/1222617763063926938/343d64639fc21af042c81fa78d447922.webp?size=128'},
         
@@ -571,7 +589,7 @@ function createExpandCard(key) {
           </div>`;
       }).join('') || ""}
     <p class="memberCount"> ${data.memberCount}</p>
-
+   <small>Ich kann mir selber nicht erklären, warum der Titel da oben so wegbuggt, aber hey: Dafür gibts doch die Discord Ränge. (Bitte gib mir die Lösung ich hab kene Nerven mehr :( )</small>
     </div>
   `;
   return card;
@@ -580,29 +598,38 @@ function createExpandCard(key) {
 function toggleServer(e) {
   const btn = e.currentTarget;
   const key = btn.dataset.server;
-  const existing = document.getElementById(key + 'Card');
   const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-  
+
+  // Alle Buttons zurücksetzen
+  document.querySelectorAll('.server').forEach(s => {
+    s.classList.remove('active');
+    s.setAttribute('aria-expanded', 'false');
+  });
 
   if (isExpanded) {
+    // 🟣 Fade-out starten
     expandArea.classList.remove('active');
-    expandArea.innerHTML = '';
+    btn.classList.remove('active');
     btn.setAttribute('aria-expanded', 'false');
     
+    // 🕓 Warte bis Transition vorbei ist, dann leeren
+    setTimeout(() => {
+      expandArea.innerHTML = '';
+    }, 400);
     return;
   }
 
-  document.querySelectorAll('.server').forEach(s => s.setAttribute('aria-expanded', 'false'));
+  // 🟢 Vorherigen Inhalt leeren und neuen einsetzen
   expandArea.innerHTML = '';
-
   const card = createExpandCard(key);
   if (card) {
     expandArea.appendChild(card);
     expandArea.classList.add('active');
     btn.setAttribute('aria-expanded', 'true');
-    
+    btn.classList.add('active');
   }
 }
+
 
 serverButtons.forEach(b => {
   b.addEventListener('click', toggleServer);

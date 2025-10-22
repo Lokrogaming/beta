@@ -10,6 +10,16 @@
   font-family: "Varela Round";
   src: url("https://lokrogaming.github.io/fonts/VarelaRound-Regular.ttf") format("truetype");
 }
-
+@font-face {
+  font-family: "playwrite German school";
+  src: url("https://lokrogaming.github.io/fonts/PlaywriteDESAS-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+  font-family: "meowScript";
+  src: url("beta/fonts/MeowScript-Regular.ttf") format("truetype");
+}
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&family=Outfit:wght@100..900&display=swap');
+
+
+

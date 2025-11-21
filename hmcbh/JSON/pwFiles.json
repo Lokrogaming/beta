@@ -1,0 +1,16 @@
+{
+  "lists": [
+    {
+      "name": "Top 10k Passwords",
+      "path": "https://lokrogaming.github.io/SecLists/Passwords/Common-Credentials/10k-most-common.txt"
+    },
+    {
+      "name": "RockYou",
+      "path": "https://lokrogaming.github.io/SecLists/Passwords/Leaked-Databases/rockyou.txt"
+    },
+    {
+      "name": "Common Admin Passwords",
+      "path": "https://lokrogaming.github.io/SecLists/Passwords/Common-Ports/admin-passwords.txt"
+    }
+  ]
+}

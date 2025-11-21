@@ -1,0 +1,16 @@
+{
+  "lists": [
+    {
+      "name": "Common Usernames",
+      "path": "https://lokrogaming.github.io/secLists/Usernames/common-usernames.txt"
+    },
+    {
+      "name": "Top Usernames",
+      "path": "https://lokrogaming.github.io/secLists/Usernames/top-usernames-shortlist.txt"
+    },
+    {
+      "name": "Admin Usernames",
+      "path": "https://lokrogaming.github.io/secLists/Usernames/admins.txt"
+    }
+  ]
+}

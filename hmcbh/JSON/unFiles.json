@@ -10,7 +10,7 @@
     },
     {
       "name": "Admin Usernames",
-      "path": "https://lokrogaming.github.io/secLists/Usernames/admins.txt"
+      "path": "https://lokrogaming.github.io/SecLists/Usernames/admins.txt"
     }
   ]
 }

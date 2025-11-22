@@ -5,12 +5,11 @@
       "path": "https://lokrogaming.github.io/SecLists/Passwords/Common-Credentials/10k-most-common.txt"
     },
     {
-      "name": "RockYou",
-      "path": "https://lokrogaming.github.io/SecLists/Passwords/Leaked-Databases/rockyou.txt"
+      "name": "10 Million Passwords",
+      "path": "https://lokrogaming.github.io/SecLists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt"
     },
     {
-      "name": "Common Admin Passwords",
-      "path": "https://lokrogaming.github.io/SecLists/Passwords/Common-Ports/admin-passwords.txt"
-    }
+      "name": "German Common Passwords",
+      "path": "https://lokrogaming.github.io/SecLists/Passwords/Common-Credentials/Language-Specific/German_common-password-list.txt"
   ]
 }

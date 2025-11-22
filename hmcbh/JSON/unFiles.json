@@ -1,12 +1,12 @@
 {
   "lists": [
     {
-      "name": "Common Usernames",
-      "path": "https://lokrogaming.github.io/secLists/Usernames/common-usernames.txt"
+      "name": "10 Million Usernames",
+      "path": "https://lokrogaming.github.io/SecLists/Usernames/xato-net-10-million-usernames.txt"
     },
     {
-      "name": "Top Usernames",
-      "path": "https://lokrogaming.github.io/secLists/Usernames/top-usernames-shortlist.txt"
+      "name": "Spanish Names",
+      "path": "https://lokrogaming.github.io/SecLists/Usernames/Names/names.txt"
     },
     {
       "name": "Admin Usernames",

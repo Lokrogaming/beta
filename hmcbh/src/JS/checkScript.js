@@ -234,10 +234,12 @@ let readBytes = 0;
     for(const ln of lines){
       lineNo++;
       // simple checks: exact match or contains
-      const lower = ln.toLowerCase();
-      let matched = false;
-      if(password && lower.includes(lowerPassword)) matched = true;
-      if(username && lower.includes(lowerUsername)) matched = true;
+      const trimmed = ln.trim();
+const lower = trimmed.toLowerCase();
+
+let matched = false;
+if(password && lower === lowerPassword) matched = true;
+if(username && lower === lowerUsername) matched = true;
       if(matched && !foundInThisFile){
         foundInThisFile = true;
         foundCount++;

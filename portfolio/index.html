@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>NetCologne Testpage</title>
+    <style>
+        .placeholderBG {
+            --color: rgba(255,255,255,.15);
+            background-image:
+                linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent);
+            background-size: 40px 40px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,.15);
+        }
+      .blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: .35;
+    animation: float 20s ease-in-out infinite;
+}
+
+/* NetCologne-Blau */
+.blob1 {
+    width: 420px;
+    height: 420px;
+    background: #0096ff;
+
+    top: -120px;
+    left: -100px;
+
+    animation-duration: 18s;
+}
+
+.blob2 {
+    width: 350px;
+    height: 350px;
+    background: #1d7dff;
+
+    top: 20%;
+    right: -120px;
+
+    animation-duration: 25s;
+    animation-delay: -5s;
+}
+
+.blob3 {
+    width: 500px;
+    height: 500px;
+    background: #4aa8ff;
+
+    bottom: -180px;
+    left: 30%;
+
+    animation-duration: 28s;
+    animation-delay: -10s;
+}
+
+.blob4 {
+    width: 260px;
+    height: 260px;
+    background: #6ec1ff;
+
+    bottom: 15%;
+    right: 20%;
+
+    animation-duration: 22s;
+    animation-delay: -15s;
+}
+
+@keyframes float {
+
+    0% {
+        transform: translate(0,0) scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(80px,-40px) scale(1.08) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(-40px,70px) scale(.92) rotate(180deg);
+    }
+
+    75% {
+        transform: translate(-90px,-30px) scale(1.05) rotate(270deg);
+    }
+
+    100% {
+        transform: translate(0,0) scale(1) rotate(360deg);
+    }
+
+}
+    </style>
+  <script>
+const blobs = document.querySelectorAll(".blob");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x = e.clientX / window.innerWidth - 0.5;
+    const y = e.clientY / window.innerHeight - 0.5;
+
+    blobs.forEach((blob, i) => {
+
+        const speed = (i + 1) * 20;
+
+        blob.style.transform =
+            `translate(${x * speed}px, ${y * speed}px)`;
+
+    });
+
+});
+</script>
+</head>
+
+<body class="bg-black text-white overflow-x-hidden">
+
+    <!-- Hintergrund -->
+    <iframe
+        src="https://lokro.dev/beta/nc/background.html"
+        class="fixed inset-0 w-full h-full -z-10 border-0">
+    </iframe>
+    <!-- Animierte Blur-Kreise -->
+<div class="pointer-events-none fixed inset-0 overflow-hidden -z-0">
+
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <div class="blob blob4"></div>
+
+</div>
+    <main class="relative min-h-screen">
+
+        <!-- Navbar -->
+        <nav class="glass fixed top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-2xl px-6 py-4 z-50">
+            <div class="flex items-center justify-between">
+
+                <div class="flex items-center gap-4">
+                    <div class="placeholderBG w-12 h-12 rounded-xl"></div>
+
+                    <div>
+                        <h1 class="font-bold text-xl">NetCologne</h1>
+                        <p class="text-xs text-white/60">
+                            Glasfaser & Internet
+                        </p>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex gap-8 text-white/80">
+                    <a href="#">Internet</a>
+                    <a href="#">Glasfaser</a>
+                    <a href="#">TV</a>
+                    <a href="#">Support</a>
+                </div>
+
+                <button class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-xl font-semibold transition">
+                    Kunde werden
+                </button>
+
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="min-h-screen flex items-center justify-center mt-15 px-6">
+
+            <img src="/assets/logo-white.png">
+
+</section>
+    </main>
+
+</body>
+</html>

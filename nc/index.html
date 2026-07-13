@@ -1,1 +1,637 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        .placeholderBG {
+            --color: rgba(255,255,255,.15);
+            background-image:
+                linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent);
+            background-size: 40px 40px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,.15);
+        }
+      .blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: .35;
+    animation: float 20s ease-in-out infinite;
+}
+
+/* NetCologne-Blau */
+.blob1 {
+    width: 420px;
+    height: 420px;
+    background: #0096ff;
+
+    top: -120px;
+    left: -100px;
+
+    animation-duration: 18s;
+}
+
+.blob2 {
+    width: 350px;
+    height: 350px;
+    background: #1d7dff;
+
+    top: 20%;
+    right: -120px;
+
+    animation-duration: 25s;
+    animation-delay: -5s;
+}
+
+.blob3 {
+    width: 500px;
+    height: 500px;
+    background: #4aa8ff;
+
+    bottom: -180px;
+    left: 30%;
+
+    animation-duration: 28s;
+    animation-delay: -10s;
+}
+
+.blob4 {
+    width: 260px;
+    height: 260px;
+    background: #6ec1ff;
+
+    bottom: 15%;
+    right: 20%;
+
+    animation-duration: 22s;
+    animation-delay: -15s;
+}
+
+@keyframes float {
+
+    0% {
+        transform: translate(0,0) scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(80px,-40px) scale(1.08) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(-40px,70px) scale(.92) rotate(180deg);
+    }
+
+    75% {
+        transform: translate(-90px,-30px) scale(1.05) rotate(270deg);
+    }
+
+    100% {
+        transform: translate(0,0) scale(1) rotate(360deg);
+    }
+
+}
+    </style>
+  <script>
+const blobs = document.querySelectorAll(".blob");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x = e.clientX / window.innerWidth - 0.5;
+    const y = e.clientY / window.innerHeight - 0.5;
+
+    blobs.forEach((blob, i) => {
+
+        const speed = (i + 1) * 20;
+
+        blob.style.transform =
+            `translate(${x * speed}px, ${y * speed}px)`;
+
+    });
+
+});
+</script>
+</head>
+
+<body class="bg-black text-white overflow-x-hidden">
+
+    <!-- Hintergrund -->
+    <iframe
+        src="https://lokro.dev/beta/nc/background.html"
+        class="fixed inset-0 w-full h-full -z-10 border-0">
+    </iframe>
+    <!-- Animierte Blur-Kreise -->
+<div class="pointer-events-none fixed inset-0 overflow-hidden -z-0">
+
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <div class="blob blob4"></div>
+
+</div>
+    <main class="relative min-h-screen">
+
+        <!-- Navbar -->
+        <nav class="glass fixed top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-2xl px-6 py-4 z-50">
+            <div class="flex items-center justify-between">
+
+                <div class="flex items-center gap-4">
+                    <div class="placeholderBG w-12 h-12 rounded-xl"></div>
+
+                    <div>
+                        <h1 class="font-bold text-xl">NetCologne</h1>
+                        <p class="text-xs text-white/60">
+                            Glasfaser & Internet
+                        </p>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex gap-8 text-white/80">
+                    <a href="#">Internet</a>
+                    <a href="#">Glasfaser</a>
+                    <a href="#">TV</a>
+                    <a href="#">Support</a>
+                </div>
+
+                <button class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-xl font-semibold transition">
+                    Kunde werden
+                </button>
+
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="min-h-screen flex items-center justify-center mt-15 px-6">
+
+            <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-12 items-center">
+
+                <div>
+                    <span class="glass px-4 py-2 rounded-full text-sm inline-block mb-6">
+                        ⚡ Highspeed Internet aus Köln
+                    </span>
+
+                    <h1 class="text-5xl md:text-7xl font-black leading-tight">
+                        Die Zukunft des
+                        <span class="text-blue-400">
+                            Internets
+                        </span>
+                    </h1>
+
+                    <p class="text-xl text-white/70 mt-6 max-w-xl">
+                        Erleben Sie ultraschnelle Glasfaseranschlüsse,
+                        zuverlässige Verbindungen und moderne digitale
+                        Lösungen für Ihr Zuhause.
+                    </p>
+
+                    <div class="flex gap-4 mt-10 flex-wrap">
+                        <button class="bg-blue-600 hover:bg-blue-500 px-8 py-4 rounded-2xl font-semibold transition">
+                            Tarife ansehen
+                        </button>
+
+                        <button class="glass px-8 py-4 rounded-2xl">
+                            Mehr erfahren
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass rounded-3xl p-6 h-[500px]">
+                    <div class="placeholderBG rounded-2xl h-full w-full flex flex-col items-center justify-center">
+                        <span class="text-white/50 text-lg">
+                            Hero Image Placeholder
+                        </span>
+                        <span class="text-red-400 text-md">
+                          Alle Daten, Bilder und Werte sind nur beispielhaft. Dies sind keine echten Daten!
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Features -->
+        <section class="max-w-7xl mx-auto px-6 pb-32">
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <div class="glass rounded-3xl p-8">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold mb-3">
+                        Bis zu 10 Gbit/s
+                    </h3>
+                    <p class="text-white/70">
+                        Modernste Glasfasertechnologie für maximale Geschwindigkeit.
+                    </p>
+                </div>
+
+                <div class="glass rounded-3xl p-8">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="text-2xl font-bold mb-3">
+                        Zuverlässig
+                    </h3>
+                    <p class="text-white/70">
+                        Stabile Verbindungen für Homeoffice, Gaming und Streaming.
+                    </p>
+                </div>
+
+                <div class="glass rounded-3xl p-8">
+                    <div class="text-4xl mb-4">📺</div>
+                    <h3 class="text-2xl font-bold mb-3">
+                        Alles aus einer Hand
+                    </h3>
+                    <p class="text-white/70">
+                        Internet, TV und Telefonie in einem modernen Paket.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+        <section class="max-w-6xl mx-auto px-6 pb-24">
+
+    <div class="glass rounded-3xl p-8 md:p-12">
+
+        <div class="text-center mb-10">
+            <span class="px-4 py-2 rounded-full bg-blue-500/20 text-blue-300 text-sm">
+                Verfügbarkeitsprüfung
+            </span>
+
+            <h2 class="text-4xl font-bold mt-4">
+                Prüfen Sie die Verfügbarkeit
+            </h2>
+
+            <p class="text-white/70 mt-3">
+                Geben Sie Ihre Adresse ein und prüfen Sie in wenigen Sekunden,
+                welche Geschwindigkeiten verfügbar sind.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-[1fr_auto] gap-4">
+
+            <div class="relative">
+
+                <input
+                    id="address"
+                    list="addressList"
+                    placeholder="Straße, Hausnummer, Ort"
+                    class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 outline-none focus:border-blue-400 transition">
+
+                <datalist id="addressList">
+                    <option value="Domstraße 1, Köln">
+                    <option value="Neumarkt 5, Köln">
+                    <option value="Aachener Straße 100, Köln">
+                    <option value="Bonner Straße 50, Köln">
+                    <option value="Venloer Straße 321, Köln">
+                </datalist>
+
+            </div>
+
+            <button
+                id="checkButton"
+                class="bg-blue-600 hover:bg-blue-500 transition px-10 rounded-2xl font-semibold">
+                Prüfen
+            </button>
+
+        </div>
+
+        <div
+            id="loading"
+            class="hidden mt-8 text-center">
+
+            <div class="inline-flex items-center gap-3">
+
+                <svg class="animate-spin h-6 w-6 text-blue-400"
+                    viewBox="0 0 24 24"
+                    fill="none">
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="4"
+                        opacity=".2"/>
+
+                    <path
+                        d="M22 12A10 10 0 0012 2"
+                        stroke="currentColor"
+                        stroke-width="4"/>
+                </svg>
+
+                Adresse wird geprüft...
+            </div>
+
+        </div>
+
+        <div
+            id="result"
+            class="hidden mt-10">
+
+            <div class="glass rounded-2xl p-8">
+
+                <div class="flex justify-between flex-wrap gap-6">
+
+                    <div>
+
+                        <p class="text-white/50">
+                            Verfügbare Technologie
+                        </p>
+
+                        <h3
+                            id="technology"
+                            class="text-3xl font-bold mt-2">
+                        </h3>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-white/50">
+                            Maximale Geschwindigkeit
+                        </p>
+
+                        <h3
+                            id="speed"
+                            class="text-3xl font-bold text-blue-400 mt-2">
+                        </h3>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-8">
+                    <button
+                        class="bg-blue-600 hover:bg-blue-500 px-8 py-4 rounded-xl">
+                        Passenden Tarif ansehen
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+const database = {
+
+    "Domstraße 1, Köln": {
+        technology: "Glasfaser",
+        speed: "10 Gbit/s"
+    },
+
+    "Neumarkt 5, Köln": {
+        technology: "Glasfaser",
+        speed: "2 Gbit/s"
+    },
+
+    "Aachener Straße 100, Köln": {
+        technology: "Kabel",
+        speed: "1000 Mbit/s"
+    },
+
+    "Bonner Straße 50, Köln": {
+        technology: "VDSL",
+        speed: "250 Mbit/s"
+    },
+
+    "Venloer Straße 321, Köln": {
+        technology: "DSL",
+        speed: "100 Mbit/s"
+    }
+
+};
+
+const btn = document.getElementById("checkButton");
+const input = document.getElementById("address");
+
+btn.onclick = () => {
+
+    document.getElementById("result").classList.add("hidden");
+    document.getElementById("loading").classList.remove("hidden");
+
+    setTimeout(() => {
+
+        document.getElementById("loading").classList.add("hidden");
+
+        const data = database[input.value] ?? {
+            technology: "Nicht verfügbar",
+            speed: "-"
+        };
+
+        document.getElementById("technology").textContent = data.technology;
+        document.getElementById("speed").textContent = data.speed;
+
+        document.getElementById("result").classList.remove("hidden");
+
+    }, 1800);
+
+};
+
+</script>
+      <!-- Tarifvergleich -->
+<section class="max-w-7xl mx-auto px-6 py-24">
+
+    <div class="text-center mb-16">
+        <span class="bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm">
+            Unsere Tarife
+        </span>
+
+        <h2 class="text-5xl font-black mt-5">
+            Finde den passenden Tarif
+        </h2>
+
+        <p class="text-white/70 mt-4 max-w-2xl mx-auto">
+            Egal ob Surfen, Homeoffice oder Gaming – hier findest du den passenden Anschluss.
+        </p>
+    </div>
+
+    <div class="overflow-x-auto rounded-3xl glass">
+
+        <table class="w-full min-w-[900px]">
+
+            <thead>
+
+                <tr class="border-b border-white/10">
+
+                    <th class="text-left p-8 text-white/60">
+                        Eigenschaften
+                    </th>
+
+                    <th class="p-8">
+
+                        <div class="glass rounded-2xl p-6">
+
+                            <h3 class="text-2xl font-bold">
+                                Basic
+                            </h3>
+
+                            <div class="text-4xl font-black mt-4">
+                                100
+                            </div>
+
+                            <div class="text-white/60">
+                                Mbit/s
+                            </div>
+
+                            <div class="text-3xl font-bold mt-6">
+                                29,99€
+                            </div>
+
+                            <button class="mt-6 w-full bg-blue-600 rounded-xl py-3 hover:bg-blue-500 transition">
+                                Auswählen
+                            </button>
+
+                        </div>
+
+                    </th>
+
+                    <th class="p-8 relative">
+
+                        <div class="absolute top-0 mt-2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 px-5 py-2 rounded-full text-sm font-semibold shadow-xl">
+                            ⭐ Empfohlen
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 border border-blue-400 shadow-[0_0_40px_rgba(59,130,246,.3)]">
+
+                            <h3 class="text-2xl font-bold">
+                                Premium
+                            </h3>
+
+                            <div class="text-4xl font-black mt-4 text-blue-400">
+                                500
+                            </div>
+
+                            <div class="text-white/60">
+                                Mbit/s
+                            </div>
+
+                            <div class="text-3xl font-bold mt-6">
+                                44,99€
+                            </div>
+
+                            <button class="mt-6 w-full bg-blue-600 rounded-xl py-3 hover:bg-blue-500 transition">
+                                Auswählen
+                            </button>
+
+                        </div>
+
+                    </th>
+
+                    <th class="p-8">
+
+                        <div class="glass rounded-2xl p-6">
+
+                            <h3 class="text-2xl font-bold">
+                                Ultra
+                            </h3>
+
+                            <div class="text-4xl font-black mt-4">
+                                1000
+                            </div>
+
+                            <div class="text-white/60">
+                                Mbit/s
+                            </div>
+
+                            <div class="text-3xl font-bold mt-6">
+                                69,99€
+                            </div>
+
+                            <button class="mt-6 w-full bg-blue-600 rounded-xl py-3 hover:bg-blue-500 transition">
+                                Auswählen
+                            </button>
+
+                        </div>
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody class="text-center">
+
+                <tr class="border-b border-white/10 hover:bg-white/5 transition">
+                    <td class="text-left p-6 font-semibold">
+                        Download
+                    </td>
+
+                    <td>100 Mbit/s</td>
+                    <td class="text-blue-300">500 Mbit/s</td>
+                    <td>1000 Mbit/s</td>
+                </tr>
+
+                <tr class="border-b border-white/10 hover:bg-white/5 transition">
+                    <td class="text-left p-6 font-semibold">
+                        Upload
+                    </td>
+
+                    <td>40 Mbit/s</td>
+                    <td class="text-blue-300">250 Mbit/s</td>
+                    <td>500 Mbit/s</td>
+                </tr>
+
+                <tr class="border-b border-white/10 hover:bg-white/5 transition">
+                    <td class="text-left p-6 font-semibold">
+                        Glasfaser
+                    </td>
+
+                    <td>✔️</td>
+                    <td>✔️</td>
+                    <td>✔️</td>
+                </tr>
+
+                <tr class="border-b border-white/10 hover:bg-white/5 transition">
+                    <td class="text-left p-6 font-semibold">
+                        WLAN-Router
+                    </td>
+
+                    <td>Optional</td>
+                    <td>Inklusive</td>
+                    <td>Premium Router</td>
+                </tr>
+
+                <tr class="border-b border-white/10 hover:bg-white/5 transition">
+                    <td class="text-left p-6 font-semibold">
+                        Mindestlaufzeit
+                    </td>
+
+                    <td>24 Monate</td>
+                    <td>24 Monate</td>
+                    <td>24 Monate</td>
+                </tr>
+
+                <tr class="hover:bg-white/5 transition">
+                    <td class="text-left p-6 font-semibold">
+                        Support
+                    </td>
+
+                    <td>E-Mail</td>
+                    <td>Priorität</td>
+                    <td>Premium 24/7</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+    </main>
+
+</body>
+</html>
 

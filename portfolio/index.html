@@ -99,6 +99,11 @@
     }
 
 }
+        .gradient-text {
+  background: linear-gradient(90deg, #a97aff, #4dd5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
     </style>
   <script>
 const blobs = document.querySelectorAll(".blob");
@@ -169,9 +174,10 @@ document.addEventListener("mousemove", (e) => {
         </nav>
 
         <!-- Hero -->
-        <section class="min-h-screen flex items-center justify-center mt-15 px-6">
+        <section class="min-h-screen flex items-center justify-center px-6">
 
             <img src="/assets/logo-white.png" class="w-25 h-25 rounded-md">
+            <p class="font-bold text-lg"><span class="gradient-text">Lokro</span>gamer</p>
 
 </section>
     </main>

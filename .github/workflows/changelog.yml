@@ -1,0 +1,22 @@
+name: Generate Changelog
+
+on:
+  push:
+    branches: [main, master]
+  release:
+    types: [published]
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Changelog
+        env:
+          WEBHOOK_SECRET: ${{ secrets.AUTOCHANGELOG_WEBHOOK_SECRET }}
+        run: |
+          BODY='{"bump": "patch"}'
+          SIGNATURE=$(echo -n "$BODY" | openssl dgst -sha256 -hmac "$WEBHOOK_SECRET" | sed 's/^.* //')
+          curl -X POST https://autochangelog.com/api/v1/hooks/64f9d5b4-c061-4cbd-a4cd-1053ce6fadfd \
+            -H "Content-Type: application/json" \
+            -H "X-Webhook-Signature: sha256=$SIGNATURE" \
+            -d "$BODY"

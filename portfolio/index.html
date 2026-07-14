@@ -493,25 +493,7 @@ scroll-behaviour: smooth;
 }
 
     </style>
-  <script>
-const blobs = document.querySelectorAll(".blob");
-
-document.addEventListener("mousemove", (e) => {
-
-    const x = e.clientX / window.innerWidth - 0.5;
-    const y = e.clientY / window.innerHeight - 0.5;
-
-    blobs.forEach((blob, i) => {
-
-        const speed = (i + 1) * 20;
-
-        blob.style.transform =
-            `translate(${x * speed}px, ${y * speed}px)`;
-
-    });
-
-});
-</script>
+ 
 </head>
 
 <body class="bg-black text-white overflow-x-hidden">
@@ -763,6 +745,24 @@ document.addEventListener("mousemove", (e) => {
 
 </section>
     </main>
+ <script>
+const blobs = document.querySelectorAll(".blob");
 
+document.addEventListener("mousemove", (e) => {
+
+    const x = e.clientX / window.innerWidth - 0.5;
+    const y = e.clientY / window.innerHeight - 0.5;
+
+    blobs.forEach((blob, i) => {
+
+        const speed = (i + 1) * 20;
+
+        blob.style.transform =
+            `translate(${x * speed}px, ${y * speed}px)`;
+
+    });
+
+});
+</script>
 </body>
 </html>

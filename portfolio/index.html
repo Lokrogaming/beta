@@ -519,7 +519,9 @@ scroll-behaviour: smooth;
             <div class="flex items-center justify-between">
 
                 <div class="flex items-center gap-4">
-                    <div class="bg-[url(/assets/logo-white.png)] w-12 h-12 rounded-xl"></div>
+                    <div class="w-12 h-12 rounded-xl">
+                        <img src="https://lokro.dev/assets/logo-white.png" alt="LG Logo">
+                    </div>
 
                     <div>
                         <h1 class="font-bold text-xl">Lokrogamer</h1>
@@ -546,14 +548,14 @@ scroll-behaviour: smooth;
         <!-- Hero -->
         <section class="min-h-screen flex flex-col items-center justify-center px-6 ">
          <div class="w-[95%] max-w-7xl rounded-2xl px-6 py-4 z-1 glass flex flex-col gap-5 items-center">
-            <img src="/assets/logo-white.png" class="w-25 h-25 rounded-md">
+            <img src="https://lokro.dev/assets/logo-white.png" class="w-25 h-25 rounded-md">
             <p class="font-bold text-3xl"><span class="gradient-text">Lokro</span>gamer</p>
            
             </div>
         
 </section>
 <section class="flex items-center justify-center">
-        <img src="/assets/banner-red.png" class="rounded-3xl shadow-xl shadow-red-600/50 m-10 w-[60%]  transition-transform hover:scale-105 ease-in-out duration-350">
+        <img src="https://lokro.dev/assets/banner-red.png" class="rounded-3xl shadow-xl shadow-red-600/50 m-10 w-[85%] h-[85%] transition-transform hover:scale-105 ease-in-out duration-350">
 </section>
         <section class="glass flex flex-col items-left m-4 w-[95%] max-w-7xl rounded-2xl px-6 py-4 z-1">
             <!-- From Uiverse.io by zeeshan_2112 --> 
@@ -744,16 +746,139 @@ scroll-behaviour: smooth;
     </div>
 
 </section>
-        <section class="glass flex flex-col items-center m-4 w-[95%] max-w-7xl rounded-2xl px-6 py-4 z-1">
-            <p class="text-xl font-bold">Merch</p>
-            <div class="glass flex flex-col items-center justify-center rounded-xl w-full h-200">
-               Coming Soon
+        <section class="relative glass w-[95%] max-w-7xl rounded-2xl px-8 py-8 m-4 overflow-hidden">
+
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h2 class="text-3xl font-bold">
+                Merch Store
+            </h2>
+            <p class="text-white/60 mt-1">
+                Offizieller Lokrogamer Merchandise.
+            </p>
+        </div>
+    </div>
+
+    <!-- Shop Grid -->
+    <div class="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+        <!-- Hoodie -->
+        <a href="#" class="group overflow-hidden rounded-3xl glass transition duration-300 hover:-translate-y-2 hover:border-blue-400/40 hover:shadow-[0_0_35px_rgba(59,130,246,.25)]">
+
+            <div class="aspect-square overflow-hidden">
+                <img
+                    src="https://placehold.co/700x700/18181b/ffffff?text=Hoodie"
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    alt="Lokrogamer Hoodie">
             </div>
-            
-            <div id="shop" class="hidden grid-cols-1 md:grid-cols-3 lg:grid-cols-4 w-full">
+
+            <div class="p-6">
+
+                <h3 class="text-xl font-bold">
+                    Mauspads
+                </h3>
+
+                <p class="mt-2 text-sm text-white/60">
+                    Custom Mauspads im offiziellen LOKRO-Stil
+                </p>
+
+                <button class="mt-6 rounded-xl bg-blue-600 px-5 py-3 font-semibold transition hover:bg-blue-500">
+                    Zum Produkt →
+                </button>
 
             </div>
-        </section>
+
+        </a>
+
+        <!-- Shirt -->
+        <a href="#" class="group overflow-hidden rounded-3xl glass transition duration-300 hover:-translate-y-2 hover:border-blue-400/40 hover:shadow-[0_0_35px_rgba(59,130,246,.25)]">
+
+            <div class="aspect-square overflow-hidden">
+                <img
+                    src="https://placehold.co/700x700/18181b/ffffff?text=T-Shirt"
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    alt="Lokrogamer Shirt">
+            </div>
+
+            <div class="p-6">
+
+                <h3 class="text-xl font-bold">
+                    Classic T-Shirt
+                </h3>
+
+                <p class="mt-2 text-sm text-white/60">
+                    LOKRO T-Shirt im Doodle Cat Design
+                </p>
+
+                <button class="mt-6 rounded-xl bg-blue-600 px-5 py-3 font-semibold transition hover:bg-blue-500">
+                    Zum Produkt →
+                </button>
+
+            </div>
+
+        </a>
+
+        <!-- Cap -->
+        <a href="#" class="group overflow-hidden rounded-3xl glass transition duration-300 hover:-translate-y-2 hover:border-blue-400/40 hover:shadow-[0_0_35px_rgba(59,130,246,.25)]">
+
+            <div class="aspect-square overflow-hidden">
+                <img
+                    src="https://placehold.co/700x700/18181b/ffffff?text=Mug"
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    alt="Lokrogamer Cap">
+            </div>
+
+            <div class="p-6">
+
+                <h3 class="text-xl font-bold">
+                    Tasse Typ Katze
+                </h3>
+
+                <p class="mt-2 text-sm text-white/60">
+                    Hochwertige Tasse mit Katzendesign
+                </p>
+
+                <button class="mt-6 rounded-xl bg-blue-600 px-5 py-3 font-semibold transition hover:bg-blue-500">
+                    Zum Produkt →
+                </button>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <!-- Coming Soon Overlay -->
+    <div class="absolute inset-0 z-50 flex items-center justify-center bg-black/35 backdrop-blur-lg">
+
+        <div class="glass rounded-3xl px-12 py-10 text-center max-w-lg">
+
+            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-blue-500/20 border border-blue-400/30">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5.4 5M7 13l-1.2 6h12.4L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/>
+
+                </svg>
+
+            </div>
+
+            <h2 class="text-4xl font-bold">
+                Coming Soon
+            </h2>
+
+            <p class="mt-4 text-white/70 leading-relaxed">
+                Unser offizieller Merch Store befindet sich aktuell im Aufbau.
+                Schon bald findest du hier Hoodies, Shirts, Caps und weitere
+                exklusive Produkte.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
 
     </main>
  <script>
